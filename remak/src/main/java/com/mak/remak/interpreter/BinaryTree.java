@@ -205,7 +205,11 @@ public class BinaryTree {
 				return 1;
 			}
 			return 0;
-
+		case "=":
+			if (leftValueInt == rightValueInt) {
+				return 1;
+			}
+			return 0;
 		case "<":
 			if (leftValueInt < rightValueInt) {
 				return 1;

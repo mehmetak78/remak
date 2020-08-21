@@ -19,6 +19,7 @@ public class Node implements Comparable<Node> {
 		case ">":
 		case "<=":
 		case ">=":
+		case "=":
 			return 15;
 		case "+":
 		case "-":
