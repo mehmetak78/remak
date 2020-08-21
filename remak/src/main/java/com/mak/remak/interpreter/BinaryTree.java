@@ -9,7 +9,7 @@ import java.util.Queue;
 public class BinaryTree {
 
 	private Node root = null;
-	private int itemCount = 0;
+	private int returnIndex = 0;
 
 	private static Boolean checkExpression(List<String> strList) {
 		if (strList.size() < 3) {
@@ -24,7 +24,6 @@ public class BinaryTree {
 		
 		List<String> strList = new ArrayList<String>(Arrays.asList(str.split(" ")));
 		strList.removeAll(Arrays.asList("", null));
-
 		
 		if (!checkExpression(strList)) {
 			return null;
@@ -44,7 +43,7 @@ public class BinaryTree {
 			currStr = strList.get(i);
 
 			if (currStr.compareTo(")") == 0) {
-				bt.itemCount = i;
+				bt.returnIndex = i;
 				return bt;
 			}
 			
@@ -56,7 +55,7 @@ public class BinaryTree {
 					newNode = null;
 					BinaryTree bt2 = parseExpressionRecursive(strList, ++i);
 					bt.addSubTree(bt2);
-					i = bt2.itemCount;
+					i = bt2.returnIndex;
 				}
 				else if (preStr == null) {
 					newNode = new Node();
@@ -80,7 +79,7 @@ public class BinaryTree {
 				if (currStr.compareTo("(") == 0) {
 					BinaryTree bt2 = parseExpressionRecursive(strList, ++i);
 					bt.addSubTree(bt2);
-					i = bt2.itemCount;
+					i = bt2.returnIndex;
 				}
 			}
 		}
@@ -98,7 +97,6 @@ public class BinaryTree {
 		} else {
 			root = addRecursive(root, newNode);
 		}
-//		nodeCount ++;
 	}
 
 	public void addSubTree(BinaryTree newTree) {
@@ -151,10 +149,12 @@ public class BinaryTree {
 
 		if ((current == null) || (current.isValue())) {
 			return newNode;
-		} else if (newNode.compareTo(current) <= 0) {
-			newNode.parent = current;
+		} 
+		else if (newNode.compareTo(current) <= 0) {
+		//	newNode.parent = current;
 			return addParentToParentsLeft(current, newNode);
-		} else {
+		} 
+		else {
 			newNode.parent = current;
 			if (current.isSubTree()) {
 				return addParentToParentsRight(current, newNode);
@@ -166,12 +166,7 @@ public class BinaryTree {
 	}
 
 	private Node addParentToParentsLeft(Node current, Node newNode) {
-		// if (current.parent == null) {
 		root = newNode;
-		// }
-//		else {
-//			current.parent.left = newNode;
-//		}
 		newNode.parent = current.parent;
 		current.parent = newNode;
 		newNode.left = current;
@@ -180,12 +175,7 @@ public class BinaryTree {
 	}
 
 	private Node addParentToParentsRight(Node current, Node newNode) {
-//		if (current.parent == null) {
-//			root = newNode;
-//		}
-//		else {
 		current.parent.right = newNode;
-//		}
 		newNode.parent = current.parent;
 		current.parent = newNode;
 		newNode.left = current;
