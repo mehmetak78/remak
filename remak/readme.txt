@@ -14,4 +14,3 @@
 	- Create a subtree until the end of the parantheses
 	- Add this subtree to the current node's deepest right child
 	
-v	fff
