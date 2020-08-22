@@ -107,6 +107,47 @@ class BinaryTreeTest {
 	}
 	
 	@Test
+	void testPowerOperation() {
+		System.out.println("testPowerOperation()");
+
+		BinaryTree bt = BinaryTree.parseExpression("1 * 2 ** 3 * 2");
+		
+		bt.traverseInOrder(bt.getRoot());
+		System.out.println();
+		int result = bt.traverseCalculate(bt.getRoot());
+		System.out.println(result);
+
+		assertEquals(16, result);
+		
+		bt = BinaryTree.parseExpression("1 * 2 * 3 ** 2 ");
+		
+		bt.traverseInOrder(bt.getRoot());
+		System.out.println();
+		result = bt.traverseCalculate(bt.getRoot());
+		System.out.println(result);
+
+		assertEquals(18, result);
+		
+		bt = BinaryTree.parseExpression("2 ** 3 * 2 * 5 + 8 - 2");
+		
+		bt.traverseInOrder(bt.getRoot());
+		System.out.println();
+		result = bt.traverseCalculate(bt.getRoot());
+		System.out.println(result);
+
+		assertEquals(86, result);
+		
+		bt = BinaryTree.parseExpression("2 ** ( 3 ** 2 )");
+		
+		bt.traverseInOrder(bt.getRoot());
+		System.out.println();
+		result = bt.traverseCalculate(bt.getRoot());
+		System.out.println(result);
+
+		assertEquals(512, result);
+	}
+	
+	@Test
 	void testLogicalOperationsWithNOT() {
 		System.out.println("testLogicalOperationsWithNOT()");
 		fail();
