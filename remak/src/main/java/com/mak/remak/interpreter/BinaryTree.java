@@ -11,28 +11,32 @@ public class BinaryTree {
 	private Node root = null;
 	private int returnIndex = 0;
 
-	private static Boolean checkExpression(List<String> strList) {
+	private static Boolean checkExpression(List<String> strList) throws InterpreterException {
 		if (strList.size() < 3) {
-			System.out.println("Not enough parameters");
-			return false;
+			throw new InterpreterException();
 		}
+
 		return true;
+
 	}
 
-	public static BinaryTree parseExpression(String str) {
-		System.out.println("parseExpressionToTree()");
-
+	public static BinaryTree parseExpression(String str) throws InterpreterException {
 		List<String> strList = new ArrayList<String>(Arrays.asList(str.split(" ")));
 		strList.removeAll(Arrays.asList("", null));
 
 		if (!checkExpression(strList)) {
 			return null;
 		}
-		return parseExpressionRecursive(strList, 0);
+		try {
+			return parseExpressionRecursive(strList, 0);
+		} catch (Exception ex) {
+			System.out.println("Error in expression...");
+			return null;
+		}
+
 	}
 
 	public static BinaryTree parseExpressionRecursive(List<String> strList, int index) {
-		System.out.println("parseExpressionRecursive()");
 		BinaryTree bt = new BinaryTree();
 
 		Node newNode = null;
@@ -47,8 +51,12 @@ public class BinaryTree {
 				bt.returnIndex = i;
 				return bt;
 			}
+			
+			else if ((i == index) && (currStr.compareTo("NOT") == 0)) {
+				preStr = currStr;
+			}
 
-			if (newNode == null) {
+			else if (newNode == null) {
 				if (currStr.compareTo("(") == 0) {
 					newNode = new Node("0", "+", "(");
 					bt.add(newNode);
@@ -61,6 +69,14 @@ public class BinaryTree {
 					newNode = new Node();
 					newNode.left = new Node(currStr);
 					preStr = currStr;
+				} else if (preStr.compareTo("NOT") == 0) {
+					newNode = new Node();
+					newNode.left = new Node("0");
+					newNode.value = "NOT";
+					newNode.right = new Node(currStr);
+					bt.add(newNode);
+					preStr = currStr;
+					newNode = null;
 				} else {
 					newNode = new Node();
 					newNode.left = new Node(preStr);
@@ -71,7 +87,12 @@ public class BinaryTree {
 				newNode.value = currStr;
 				preStr = currStr;
 			} else if (newNode.right == null) {
-				newNode.right = new Node(currStr);
+				if (currStr.compareTo("NOT") == 0) {
+					newNode.right = new Node("0");
+				}
+				else {
+					newNode.right = new Node(currStr);
+				}
 				bt.add(newNode);
 				preStr = currStr;
 				newNode = null;
@@ -105,34 +126,41 @@ public class BinaryTree {
 				node = root.right;
 			node.right = newTree.root;
 			newTree.root.parent = root;
-			newTree.root.subTree = true;
+			newTree.root.isSubTree = true;
 		}
 	}
 
-	public int traverseCalculate(Node node) {
+	public int traverseCalculate(Node node) throws InterpreterException {
 		int leftValueInt = 0;
 		int rightValueInt = 0;
 		int result = 0;
-		if (node != null) {
-			if (!node.left.isValue() && !node.right.isValue()) {
-				leftValueInt = traverseCalculate(node.left);
-				rightValueInt = traverseCalculate(node.right);
 
-			} else if (node.left.isValue() && !node.right.isValue()) {
-				leftValueInt = Integer.parseInt(node.left.value);
-				rightValueInt = traverseCalculate(node.right);
+		try {
+			if (node != null) {
+				if (!node.left.isValue() && !node.right.isValue()) {
+					leftValueInt = traverseCalculate(node.left);
+					rightValueInt = traverseCalculate(node.right);
 
-			} else if (!node.left.isValue() && node.right.isValue()) {
-				leftValueInt = traverseCalculate(node.left);
-				rightValueInt = Integer.parseInt(node.right.value);
-			} else if (node.left.isValue() && node.right.isValue()) {
-				leftValueInt = Integer.parseInt(node.left.value);
-				rightValueInt = Integer.parseInt(node.right.value);
+				} else if (node.left.isValue() && !node.right.isValue()) {
+					leftValueInt = Integer.parseInt(node.left.value);
+					rightValueInt = traverseCalculate(node.right);
 
+				} else if (!node.left.isValue() && node.right.isValue()) {
+					leftValueInt = traverseCalculate(node.left);
+					rightValueInt = Integer.parseInt(node.right.value);
+				} else if (node.left.isValue() && node.right.isValue()) {
+					leftValueInt = Integer.parseInt(node.left.value);
+					rightValueInt = Integer.parseInt(node.right.value);
+
+				}
 			}
+
+			result = Calculator.calculate(node.value, leftValueInt, rightValueInt);
+			System.out.println("(" + leftValueInt + node.value + rightValueInt + ") = " + result);
+
+		} catch (Exception e) {
+			throw new InterpreterException();
 		}
-		result = calculateNodeExpression(node.value, leftValueInt, rightValueInt);
-		System.out.println("(" + leftValueInt + node.value + rightValueInt + ") = " + result);
 		return result;
 	}
 
@@ -164,67 +192,15 @@ public class BinaryTree {
 	private Node addParent(Node current, Node newNode) {
 		if (current.parent == null) {
 			root = newNode;
-		}
-		else {
+		} else {
 			current.parent.right = newNode;
 		}
-		
+
 		newNode.parent = current.parent;
 		current.parent = newNode;
 		newNode.left = current;
 
 		return newNode;
-	}
-
-	private int calculateNodeExpression(String operand, int leftValueInt, int rightValueInt) {
-		switch (operand) {
-		case "AND":
-			if (leftValueInt * rightValueInt > 0) {
-				return 1;
-			}
-			return 0;
-		case "OR":
-			if (leftValueInt + rightValueInt > 0) {
-				return 1;
-			}
-			return 0;
-		case "=":
-			if (leftValueInt == rightValueInt) {
-				return 1;
-			}
-			return 0;
-		case "<":
-			if (leftValueInt < rightValueInt) {
-				return 1;
-			}
-			return 0;
-		case "<=":
-			if (leftValueInt <= rightValueInt) {
-				return 1;
-			}
-			return 0;
-		case ">":
-			if (leftValueInt > rightValueInt) {
-				return 1;
-			}
-			return 0;
-		case ">=":
-			if (leftValueInt >= rightValueInt) {
-				return 1;
-			}
-			return 0;
-		case "+":
-			return leftValueInt + rightValueInt;
-		case "-":
-			return leftValueInt - rightValueInt;
-		case "*":
-			return leftValueInt * rightValueInt;
-		case "**":
-			return (int) Math.pow(leftValueInt, rightValueInt);
-		case "/":
-			return leftValueInt / rightValueInt;
-		}
-		return 0;
 	}
 
 	// Functions below are for Extra Information. Not in Use Now

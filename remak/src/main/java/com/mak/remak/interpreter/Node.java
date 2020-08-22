@@ -3,84 +3,50 @@ package com.mak.remak.interpreter;
 public class Node implements Comparable<Node> {
 
 	protected String value;
-	protected Boolean subTree;
+	protected Boolean isSubTree;
 
-	Node parent;
-	Node left;
-	Node right;
+	protected Node parent;
+	protected Node left;
+	protected Node right;
 	
-	private int getPriority(String str) {
-		switch (str) {
-		case "OR":
-			return 5;
-		case "AND":
-			return 10;
-		case "<":
-		case ">":
-		case "<=":
-		case ">=":
-		case "=":
-			return 15;
-		case "+":
-		case "-":
-			return 20;
-		case "*":
-		case "/":
-			return 25;
-		case "**":
-			return 30;
-
-		}
-		return 99;
-	}
-
-	public Node() {
+	protected Node() {
 		super();
 		this.value = null;
 		this.parent = null;
 		this.left = null;
 		this.right = null;
-		this.subTree = false;
+		this.isSubTree = false;
 	}
 	
-	public Node(String value) {
+	protected Node(String value) {
 		super();
 		this.value = value;
 		this.parent = null;
 		this.left = null;
 		this.right = null;
-		this.subTree = false;
+		this.isSubTree = false;
 	}
 	
-	public Node(String left, String value, String right) {
+	protected Node(String left, String value, String right) {
 		this(value);
 		this.left = new Node(left);
 		this.right = new Node(right);
 	}
 
-
-	public String getValue() {
-		return value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
-	}
-
 	public Boolean isValue() {
-		return getPriority(value) == 99;
+		return Calculator.getPriority(value) == 9999;
 	}
 	
 	public Boolean isSubTree() {
-		return subTree;
+		return isSubTree;
 	}
 
 	@Override
-	public int compareTo(Node o) {
+	public int compareTo(Node other) {
 
-		if (getPriority(o.getValue()) < getPriority(this.getValue())) {
+		if (Calculator.getPriority(other.value) < Calculator.getPriority(this.value)) {
 			return 1;
-		} else if (getPriority(o.getValue()) > getPriority(this.getValue())) {
+		} else if (Calculator.getPriority(other.value) > Calculator.getPriority(this.value)) {
 			return -1;
 		}
 
@@ -89,7 +55,7 @@ public class Node implements Comparable<Node> {
 	
 	@Override
 	public String toString() {
-		return '"'+left.value+" "+value+" "+right.value+'"';
+		return '('+left.value+value+right.value+')';
 	}
 
 }
