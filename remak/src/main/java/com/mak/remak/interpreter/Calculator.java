@@ -30,10 +30,7 @@ public class Calculator {
 	}
 	
 	protected static Boolean getBoolVal(int val) {
-		if (val > 0) {
-			return true;
-		}
-		return false;
+		return val > 0;
 	}
 	
 	protected static int calculate(String operand, int leftValueInt, int rightValueInt) throws InterpreterException {
