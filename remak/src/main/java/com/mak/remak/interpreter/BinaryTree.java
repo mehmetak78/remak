@@ -13,9 +13,23 @@ public class BinaryTree {
 
 	private static Boolean checkExpression(List<String> strList) throws InterpreterException {
 		if (strList.size() < 3) {
-			throw new InterpreterException();
+			throw new InterpreterException("Error in expression... Invalid number of arguments");
 		}
 
+		int paranthesesCount = 0;
+		for (String str: strList) {
+			if (str.compareTo("(") == 0) {
+				paranthesesCount++;
+			}
+			else if (str.compareTo(")") == 0) {
+				paranthesesCount--;
+			}
+		}
+		if (paranthesesCount != 0) {
+			throw new InterpreterException("Error in expression... Invalid number of parantheses");
+		}
+		
+		
 		return true;
 
 	}
