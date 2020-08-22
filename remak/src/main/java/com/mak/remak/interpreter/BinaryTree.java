@@ -149,12 +149,11 @@ public class BinaryTree {
 		if ((current == null) || (current.isValue())) {
 			return newNode;
 		} else if (newNode.compareTo(current) <= 0) {
-			// newNode.parent = current;
-			return addParentToParentsLeft(current, newNode);
+			return addParent(current, newNode);
 		} else {
 			newNode.parent = current;
 			if (current.isSubTree()) {
-				return addParentToParentsRight(current, newNode);
+				return addParent(current, newNode);
 			} else {
 				current.right = addRecursive(current.right, newNode);
 				return current;
@@ -162,17 +161,14 @@ public class BinaryTree {
 		}
 	}
 
-	private Node addParentToParentsLeft(Node current, Node newNode) {
-		root = newNode;
-		newNode.parent = current.parent;
-		current.parent = newNode;
-		newNode.left = current;
-
-		return newNode;
-	}
-
-	private Node addParentToParentsRight(Node current, Node newNode) {
-		current.parent.right = newNode;
+	private Node addParent(Node current, Node newNode) {
+		if (current.parent == null) {
+			root = newNode;
+		}
+		else {
+			current.parent.right = newNode;
+		}
+		
 		newNode.parent = current.parent;
 		current.parent = newNode;
 		newNode.left = current;

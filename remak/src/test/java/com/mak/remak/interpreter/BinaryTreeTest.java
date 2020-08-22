@@ -42,7 +42,7 @@ class BinaryTreeTest {
 	void testBasicOperationsWithParantheses() {
 		System.out.println("testBasicOperationsWithParantheses()");
 
-		BinaryTree bt = BinaryTree.parseExpression("1 + ( 2 + 3 ) * 2 )");
+		BinaryTree bt = BinaryTree.parseExpression("1 + ( 2 + 3 ) * 2 ");
 		
 		bt.traverseInOrder(bt.getRoot());
 		System.out.println();
@@ -145,6 +145,15 @@ class BinaryTreeTest {
 		System.out.println(result);
 
 		assertEquals(512, result);
+		
+		bt = BinaryTree.parseExpression("2 + 3 * 2 - 5 + 2 * 2 * ( 3 ** 2 )");
+		
+		bt.traverseInOrder(bt.getRoot());
+		System.out.println();
+		result = bt.traverseCalculate(bt.getRoot());
+		System.out.println(result);
+
+		assertEquals(39, result);
 	}
 	
 	@Test
