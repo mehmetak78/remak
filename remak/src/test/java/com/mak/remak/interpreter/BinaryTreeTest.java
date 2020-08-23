@@ -223,6 +223,19 @@ class BinaryTreeTest {
 	void testLogicalOperationsWithNOT() {
 		System.out.println("testLogicalOperationsWithNOT()");
 		try {
+			String testStr = "1 AND NOT 0";
+			int result;
+			System.out.println("Test Exprsn: " + testStr);
+			BinaryTree bt = BinaryTree.parseExpression(testStr, showCalculation);
+			result = bt.traverseCalculate();
+			System.out.println("Test Result: " + bt + " = " + result + "\n");
+			assertEquals(1, result);
+		} catch (Exception e) {
+			System.out.println(e);
+			fail("Failed with exception");
+		}
+		
+		try {
 			String testStr = "NOT 1 AND 0";
 			int result;
 			System.out.println("Test Exprsn: " + testStr);
