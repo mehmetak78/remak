@@ -358,6 +358,33 @@ class BinaryTreeTest {
 			e.printStackTrace();
 			fail("Failed with exception");
 		}
+		
+		try {
+			String testStr = "2 * 3 ** 2 * 3 + 2";
+			int result;
+			System.out.println("Test Exprsn: " + testStr);
+			BinaryTree bt = BinaryTree.parseExpression(testStr, showCalculation);
+			result = bt.traverseCalculate();
+			System.out.println("Test Result: " + bt + " = " + result + "\n");
+			assertEquals(56, result);
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("Failed with exception");
+		}
+		
+		try {
+			String testStr = "1 + 3 ** 2 * 3 + 2";
+			int result;
+			System.out.println("Test Exprsn: " + testStr);
+			BinaryTree bt = BinaryTree.parseExpression(testStr, showCalculation);
+			result = bt.traverseCalculate();
+			System.out.println("Test Result: " + bt + " = " + result + "\n");
+			assertEquals(30, result);
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("Failed with exception");
+		}
+		
 	}
 
 }
