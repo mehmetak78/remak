@@ -11,6 +11,24 @@ public class BinaryTree {
 	private Node root = null;
 	private int returnIndex = 0;
 
+
+
+	public static BinaryTree parseExpression(String str) throws InterpreterException {
+		List<String> strList = new ArrayList<String>(Arrays.asList(str.split(" ")));
+		strList.removeAll(Arrays.asList("", null));
+
+		if (!checkExpression(strList)) {
+			return null;
+		}
+		try {
+			return parseExpressionRecursive(strList, 0);
+		} catch (Exception ex) {
+			System.out.println("Error in expression...");
+			return null;
+		}
+
+	}
+
 	private static Boolean checkExpression(List<String> strList) throws InterpreterException {
 		if (strList.size() < 3) {
 			throw new InterpreterException("Error in expression... Invalid number of arguments");
@@ -33,24 +51,8 @@ public class BinaryTree {
 		return true;
 
 	}
-
-	public static BinaryTree parseExpression(String str) throws InterpreterException {
-		List<String> strList = new ArrayList<String>(Arrays.asList(str.split(" ")));
-		strList.removeAll(Arrays.asList("", null));
-
-		if (!checkExpression(strList)) {
-			return null;
-		}
-		try {
-			return parseExpressionRecursive(strList, 0);
-		} catch (Exception ex) {
-			System.out.println("Error in expression...");
-			return null;
-		}
-
-	}
-
-	public static BinaryTree parseExpressionRecursive(List<String> strList, int index) {
+	
+	private static BinaryTree parseExpressionRecursive(List<String> strList, int index) {
 		BinaryTree bt = new BinaryTree();
 
 		Node newNode = null;
@@ -124,7 +126,7 @@ public class BinaryTree {
 		return root;
 	}
 
-	public void add(Node newNode) {
+	private void add(Node newNode) {
 		System.out.println("Added: " + newNode);
 		if (root == null) {
 			root = newNode;
@@ -133,7 +135,7 @@ public class BinaryTree {
 		}
 	}
 
-	public void addSubTree(BinaryTree newTree) {
+	private void addSubTree(BinaryTree newTree) {
 		if (root != null) {
 			Node node = root;
 			while (!node.right.isValue())
@@ -144,7 +146,11 @@ public class BinaryTree {
 		}
 	}
 
-	public int traverseCalculate(Node node) throws InterpreterException {
+	public int traverseCalculate() throws InterpreterException {
+		return traverseCalculateRecursive(this.root);
+	}
+	
+	private int traverseCalculateRecursive(Node node) throws InterpreterException {
 		int leftValueInt = 0;
 		int rightValueInt = 0;
 		int result = 0;
@@ -152,15 +158,15 @@ public class BinaryTree {
 		try {
 			if (node != null) {
 				if (!node.left.isValue() && !node.right.isValue()) {
-					leftValueInt = traverseCalculate(node.left);
-					rightValueInt = traverseCalculate(node.right);
+					leftValueInt = traverseCalculateRecursive(node.left);
+					rightValueInt = traverseCalculateRecursive(node.right);
 
 				} else if (node.left.isValue() && !node.right.isValue()) {
 					leftValueInt = Integer.parseInt(node.left.value);
-					rightValueInt = traverseCalculate(node.right);
+					rightValueInt = traverseCalculateRecursive(node.right);
 
 				} else if (!node.left.isValue() && node.right.isValue()) {
-					leftValueInt = traverseCalculate(node.left);
+					leftValueInt = traverseCalculateRecursive(node.left);
 					rightValueInt = Integer.parseInt(node.right.value);
 				} else if (node.left.isValue() && node.right.isValue()) {
 					leftValueInt = Integer.parseInt(node.left.value);
@@ -178,14 +184,6 @@ public class BinaryTree {
 		return result;
 	}
 
-	public void traverseInOrder(Node node) {
-		if (node != null) {
-			traverseInOrder(node.left);
-			System.out.print(" " + node.value);
-			traverseInOrder(node.right);
-		}
-	}
-
 	private Node addRecursive(Node current, Node newNode) {
 
 		if ((current == null) || (current.isValue())) {
@@ -194,7 +192,7 @@ public class BinaryTree {
 			return addParent(current, newNode);
 		} else {
 			newNode.parent = current;
-			if (current.isSubTree()) {
+			if (current.isSubTree) {
 				return addParent(current, newNode);
 			} else {
 				current.right = addRecursive(current.right, newNode);
@@ -217,9 +215,31 @@ public class BinaryTree {
 		return newNode;
 	}
 
+	@Override
+	public String toString() {
+		return traverseInOrder("", root);
+	}
+	
+
+	private String traverseInOrder(String outStr , Node node) {
+		
+		if (node != null) {
+			outStr = traverseInOrder(outStr, node.left);
+			outStr =outStr + " " + node.value;
+			outStr = traverseInOrder(outStr, node.right);
+		}
+		return outStr;
+	}
+	
+	
+	
+	
+	
+	
+	
 	// Functions below are for Extra Information. Not in Use Now
 
-	public void traversePreOrder(Node node) {
+	private void traversePreOrder(Node node) {
 		if (node != null) {
 			System.out.print(" " + node.value);
 			traversePreOrder(node.left);
@@ -227,7 +247,7 @@ public class BinaryTree {
 		}
 	}
 
-	public void traversePostOrder(Node node) {
+	private void traversePostOrder(Node node) {
 		if (node != null) {
 			traversePostOrder(node.left);
 			traversePostOrder(node.right);
@@ -235,7 +255,7 @@ public class BinaryTree {
 		}
 	}
 
-	public void traverseLevelOrder() {
+	private void traverseLevelOrder() {
 		if (getRoot() == null) {
 			return;
 		}

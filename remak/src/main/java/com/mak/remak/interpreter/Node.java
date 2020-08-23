@@ -2,12 +2,11 @@ package com.mak.remak.interpreter;
 
 public class Node implements Comparable<Node> {
 
-	protected String value;
-	protected Boolean isSubTree;
-
 	protected Node parent;
 	protected Node left;
+	protected String value;
 	protected Node right;
+	protected Boolean isSubTree;
 	
 	protected Node() {
 		super();
@@ -37,10 +36,6 @@ public class Node implements Comparable<Node> {
 		return Calculator.getPriority(value) == 9999;
 	}
 	
-	public Boolean isSubTree() {
-		return isSubTree;
-	}
-
 	@Override
 	public int compareTo(Node other) {
 
