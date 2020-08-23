@@ -16,7 +16,7 @@ public class BinaryTree {
 		super();
 		this.showCalculation = showCalculation;
 	}
-	
+
 	public static BinaryTree parseExpression(String str, Boolean showCalculation) throws InterpreterException {
 		List<String> strList = new ArrayList<String>(Arrays.asList(str.split(" ")));
 		strList.removeAll(Arrays.asList("", null));
@@ -38,7 +38,7 @@ public class BinaryTree {
 		}
 
 		int paranthesesCount = 0;
-		for (String str: strList) {
+		for (String str : strList) {
 			if (str.compareTo("(") == 0) {
 				paranthesesCount++;
 			}
@@ -49,17 +49,15 @@ public class BinaryTree {
 		if (paranthesesCount != 0) {
 			throw new InterpreterException("Error in expression... Invalid number of parantheses");
 		}
-		
-		
+
 		return true;
 
 	}
-	
+
 	private static BinaryTree parseExpressionRecursive(List<String> strList, int index, Boolean showCalculation) {
 		BinaryTree bt = new BinaryTree(showCalculation);
 
 		Node newNode = null;
-
 		String preStr = null;
 		String currStr = null;
 
@@ -70,7 +68,7 @@ public class BinaryTree {
 				bt.returnIndex = i;
 				return bt;
 			}
-			
+
 			else if ((i == index) && (currStr.compareTo("NOT") == 0)) {
 				preStr = currStr;
 			}
@@ -84,11 +82,13 @@ public class BinaryTree {
 					BinaryTree bt2 = parseExpressionRecursive(strList, ++i, showCalculation);
 					bt.addSubTree(bt2);
 					i = bt2.returnIndex;
-				} else if (preStr == null) {
+				}
+				else if (preStr == null) {
 					newNode = new Node();
 					newNode.left = new Node(currStr);
 					preStr = currStr;
-				} else if (preStr.compareTo("NOT") == 0) {
+				}
+				else if (preStr.compareTo("NOT") == 0) {
 					newNode = new Node();
 					newNode.left = new Node("0");
 					newNode.value = "NOT";
@@ -96,16 +96,19 @@ public class BinaryTree {
 					bt.add(newNode);
 					preStr = currStr;
 					newNode = null;
-				} else {
+				}
+				else {
 					newNode = new Node();
 					newNode.left = new Node(preStr);
 					newNode.value = currStr;
 					preStr = currStr;
 				}
-			} else if (newNode.value == null) {
+			}
+			else if (newNode.value == null) {
 				newNode.value = currStr;
 				preStr = currStr;
-			} else if (newNode.right == null) {
+			}
+			else if (newNode.right == null) {
 				if (currStr.compareTo("NOT") == 0) {
 					newNode.right = new Node("0");
 				}
@@ -125,14 +128,12 @@ public class BinaryTree {
 		return bt;
 	}
 
-
-
-
 	private void add(Node newNode) {
-		//System.out.println("Added: " + newNode);
+		// System.out.println("Added: " + newNode);
 		if (root == null) {
 			root = newNode;
-		} else {
+		}
+		else {
 			root = addRecursive(root, newNode);
 		}
 	}
@@ -151,7 +152,7 @@ public class BinaryTree {
 	public int traverseCalculate() throws InterpreterException {
 		return traverseCalculateRecursive(this.root);
 	}
-	
+
 	private int traverseCalculateRecursive(Node node) throws InterpreterException {
 		int leftValueInt = 0;
 		int rightValueInt = 0;
@@ -163,14 +164,17 @@ public class BinaryTree {
 					leftValueInt = traverseCalculateRecursive(node.left);
 					rightValueInt = traverseCalculateRecursive(node.right);
 
-				} else if (node.left.isValue() && !node.right.isValue()) {
+				}
+				else if (node.left.isValue() && !node.right.isValue()) {
 					leftValueInt = Integer.parseInt(node.left.value);
 					rightValueInt = traverseCalculateRecursive(node.right);
 
-				} else if (!node.left.isValue() && node.right.isValue()) {
+				}
+				else if (!node.left.isValue() && node.right.isValue()) {
 					leftValueInt = traverseCalculateRecursive(node.left);
 					rightValueInt = Integer.parseInt(node.right.value);
-				} else if (node.left.isValue() && node.right.isValue()) {
+				}
+				else if (node.left.isValue() && node.right.isValue()) {
 					leftValueInt = Integer.parseInt(node.left.value);
 					rightValueInt = Integer.parseInt(node.right.value);
 
@@ -181,7 +185,6 @@ public class BinaryTree {
 			if (showCalculation) {
 				System.out.println("(" + leftValueInt + node.value + rightValueInt + ") = " + result);
 			}
-			
 
 		} catch (Exception e) {
 			throw new InterpreterException();
@@ -193,13 +196,16 @@ public class BinaryTree {
 
 		if ((current == null) || (current.isValue())) {
 			return newNode;
-		} else if (newNode.compareTo(current) <= 0) {
+		}
+		else if (newNode.compareTo(current) <= 0) {
 			return addParent(current, newNode);
-		} else {
+		}
+		else {
 			newNode.parent = current;
 			if (current.isSubTree) {
 				return addParent(current, newNode);
-			} else {
+			}
+			else {
 				current.right = addRecursive(current.right, newNode);
 				return current;
 			}
@@ -209,7 +215,8 @@ public class BinaryTree {
 	private Node addParent(Node current, Node newNode) {
 		if (current.parent == null) {
 			root = newNode;
-		} else {
+		}
+		else {
 			current.parent.right = newNode;
 		}
 
@@ -224,16 +231,15 @@ public class BinaryTree {
 	public String toString() {
 		return traverseInOrder("", root);
 	}
-	
 
-	private String traverseInOrder(String outStr , Node node) {
-		
+	private String traverseInOrder(String outStr, Node node) {
+
 		if (node != null) {
 			if (node.isSubTree) {
 				outStr += " (";
 			}
 			outStr = traverseInOrder(outStr, node.left);
-			outStr =outStr + " " + node.value;
+			outStr = outStr + " " + node.value;
 			outStr = traverseInOrder(outStr, node.right);
 			if (node.isSubTree) {
 				outStr += " )";
@@ -241,10 +247,7 @@ public class BinaryTree {
 		}
 		return outStr;
 	}
-	
-	
-	
-	
+
 	/*********************************
 	 * 
 	 * 
@@ -252,9 +255,7 @@ public class BinaryTree {
 	 * 
 	 * 
 	 * 
-	 * ********************************/
-	
-	
+	 ********************************/
 
 	private void traversePreOrder(Node node) {
 		if (node != null) {

@@ -7,18 +7,18 @@ import org.junit.jupiter.api.Test;
 class BinaryTreeTest {
 
 	private Boolean showCalculation = true;
-	
+
 	@Test
 	void testExpressionErrors() {
 		System.out.println("testExpressionErrors()");
-		
+
 		assertThrows(InterpreterException.class, () -> {
 			BinaryTree bt;
 			bt = BinaryTree.parseExpression(" 3", showCalculation);
 			bt = BinaryTree.parseExpression("   1  < AND 3", showCalculation);
 			bt.traverseCalculate();
 		});
-		
+
 		System.out.println();
 
 	}
@@ -33,7 +33,7 @@ class BinaryTreeTest {
 			System.out.println("Test Exprsn: " + testStr);
 			BinaryTree bt = BinaryTree.parseExpression(testStr, showCalculation);
 			result = bt.traverseCalculate();
-			System.out.println("Test Result: "+bt+" = "+result+"\n");
+			System.out.println("Test Result: " + bt + " = " + result + "\n");
 			assertEquals(9, result);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -51,7 +51,7 @@ class BinaryTreeTest {
 			System.out.println("Test Exprsn: " + testStr);
 			BinaryTree bt = BinaryTree.parseExpression(testStr, showCalculation);
 			result = bt.traverseCalculate();
-			System.out.println("Test Result: "+bt+" = "+result+"\n");
+			System.out.println("Test Result: " + bt + " = " + result + "\n");
 			assertEquals(25, result);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -69,7 +69,7 @@ class BinaryTreeTest {
 			System.out.println("Test Exprsn: " + testStr);
 			BinaryTree bt = BinaryTree.parseExpression(testStr, showCalculation);
 			result = bt.traverseCalculate();
-			System.out.println("Test Result: "+bt+" = "+result+"\n");
+			System.out.println("Test Result: " + bt + " = " + result + "\n");
 			assertEquals(11, result);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -87,7 +87,7 @@ class BinaryTreeTest {
 			System.out.println("Test Exprsn: " + testStr);
 			BinaryTree bt = BinaryTree.parseExpression(testStr, showCalculation);
 			result = bt.traverseCalculate();
-			System.out.println("Test Result: "+bt+" = "+result+"\n");
+			System.out.println("Test Result: " + bt + " = " + result + "\n");
 			assertEquals(441, result);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -105,7 +105,7 @@ class BinaryTreeTest {
 			System.out.println("Test Exprsn: " + testStr);
 			BinaryTree bt = BinaryTree.parseExpression(testStr, showCalculation);
 			result = bt.traverseCalculate();
-			System.out.println("Test Result: "+bt+" = "+result+"\n");
+			System.out.println("Test Result: " + bt + " = " + result + "\n");
 			assertEquals(0, result);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -123,7 +123,7 @@ class BinaryTreeTest {
 			System.out.println("Test Exprsn: " + testStr);
 			BinaryTree bt = BinaryTree.parseExpression(testStr, showCalculation);
 			result = bt.traverseCalculate();
-			System.out.println("Test Result: "+bt+" = "+result+"\n");
+			System.out.println("Test Result: " + bt + " = " + result + "\n");
 			assertEquals(1, result);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -141,7 +141,7 @@ class BinaryTreeTest {
 			System.out.println("Test Exprsn: " + testStr);
 			BinaryTree bt = BinaryTree.parseExpression(testStr, showCalculation);
 			result = bt.traverseCalculate();
-			System.out.println("Test Result: "+bt+" = "+result+"\n");
+			System.out.println("Test Result: " + bt + " = " + result + "\n");
 			assertEquals(1, result);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -159,7 +159,7 @@ class BinaryTreeTest {
 			System.out.println("Test Exprsn: " + testStr);
 			BinaryTree bt = BinaryTree.parseExpression(testStr, showCalculation);
 			result = bt.traverseCalculate();
-			System.out.println("Test Result: "+bt+" = "+result+"\n");
+			System.out.println("Test Result: " + bt + " = " + result + "\n");
 			assertEquals(16, result);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -172,7 +172,7 @@ class BinaryTreeTest {
 			System.out.println("Test Exprsn: " + testStr);
 			BinaryTree bt = BinaryTree.parseExpression(testStr, showCalculation);
 			result = bt.traverseCalculate();
-			System.out.println("Test Result: "+bt+" = "+result+"\n");
+			System.out.println("Test Result: " + bt + " = " + result + "\n");
 			assertEquals(18, result);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -185,7 +185,7 @@ class BinaryTreeTest {
 			System.out.println("Test Exprsn: " + testStr);
 			BinaryTree bt = BinaryTree.parseExpression(testStr, showCalculation);
 			result = bt.traverseCalculate();
-			System.out.println("Test Result: "+bt+" = "+result+"\n");
+			System.out.println("Test Result: " + bt + " = " + result + "\n");
 			assertEquals(86, result);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -198,7 +198,7 @@ class BinaryTreeTest {
 			System.out.println("Test Exprsn: " + testStr);
 			BinaryTree bt = BinaryTree.parseExpression(testStr, showCalculation);
 			result = bt.traverseCalculate();
-			System.out.println("Test Result: "+bt+" = "+result+"\n");
+			System.out.println("Test Result: " + bt + " = " + result + "\n");
 			assertEquals(512, result);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -211,7 +211,7 @@ class BinaryTreeTest {
 			System.out.println("Test Exprsn: " + testStr);
 			BinaryTree bt = BinaryTree.parseExpression(testStr, showCalculation);
 			result = bt.traverseCalculate();
-			System.out.println("Test Result: "+bt+" = "+result+"\n");
+			System.out.println("Test Result: " + bt + " = " + result + "\n");
 			assertEquals(39, result);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -228,46 +228,46 @@ class BinaryTreeTest {
 			System.out.println("Test Exprsn: " + testStr);
 			BinaryTree bt = BinaryTree.parseExpression(testStr, showCalculation);
 			result = bt.traverseCalculate();
-			System.out.println("Test Result: "+bt+" = "+result+"\n");
+			System.out.println("Test Result: " + bt + " = " + result + "\n");
 			assertEquals(0, result);
 		} catch (Exception e) {
 			System.out.println(e);
 			fail("Failed with exception");
 		}
-		
+
 		try {
 			String testStr = "NOT 0 OR 0 AND 1 OR 0";
 			int result;
 			System.out.println("Test Exprsn: " + testStr);
 			BinaryTree bt = BinaryTree.parseExpression(testStr, showCalculation);
 			result = bt.traverseCalculate();
-			System.out.println("Test Result: "+bt+" = "+result+"\n");
+			System.out.println("Test Result: " + bt + " = " + result + "\n");
 			assertEquals(1, result);
 		} catch (Exception e) {
 			System.out.println(e);
 			fail("Failed with exception");
 		}
-		
+
 		try {
 			String testStr = "1 AND 0 AND ( NOT 0 AND 1 )";
 			int result;
 			System.out.println("Test Exprsn: " + testStr);
 			BinaryTree bt = BinaryTree.parseExpression(testStr, showCalculation);
 			result = bt.traverseCalculate();
-			System.out.println("Test Result: "+bt+" = "+result+"\n");
+			System.out.println("Test Result: " + bt + " = " + result + "\n");
 			assertEquals(0, result);
 		} catch (Exception e) {
 			System.out.println(e);
 			fail("Failed with exception");
 		}
-				
+
 		try {
 			String testStr = "1 AND ( NOT 0 AND ( 0 OR NOT 0 ) )";
 			int result;
 			System.out.println("Test Exprsn: " + testStr);
 			BinaryTree bt = BinaryTree.parseExpression(testStr, showCalculation);
 			result = bt.traverseCalculate();
-			System.out.println("Test Result: "+bt+" = "+result+"\n");
+			System.out.println("Test Result: " + bt + " = " + result + "\n");
 			assertEquals(1, result);
 		} catch (Exception e) {
 			System.out.println(e);
@@ -285,8 +285,34 @@ class BinaryTreeTest {
 			System.out.println("Test Exprsn: " + testStr);
 			BinaryTree bt = BinaryTree.parseExpression(testStr, showCalculation);
 			result = bt.traverseCalculate();
-			System.out.println("Test Result: "+bt+" = "+result+"\n");
+			System.out.println("Test Result: " + bt + " = " + result + "\n");
 			assertEquals(1, result);
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("Failed with exception");
+		}
+
+		try {
+			String testStr = "( ( ( 8 - 4 ) * 2 ) + 3 ) + 2 * ( 3 + 2 )";
+			int result;
+			System.out.println("Test Exprsn: " + testStr);
+			BinaryTree bt = BinaryTree.parseExpression(testStr, showCalculation);
+			result = bt.traverseCalculate();
+			System.out.println("Test Result: " + bt + " = " + result + "\n");
+			assertEquals(21, result);
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("Failed with exception");
+		}
+
+		try {
+			String testStr = "( ( ( 8 - 4 ) * 2 ) + 3 ) + 2 * ( 3 + 2 ) <= 21 AND 1 = 2 OR 1 = 1 AND 1 = 2";
+			int result;
+			System.out.println("Test Exprsn: " + testStr);
+			BinaryTree bt = BinaryTree.parseExpression(testStr, showCalculation);
+			result = bt.traverseCalculate();
+			System.out.println("Test Result: " + bt + " = " + result + "\n");
+			assertEquals(0, result);
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail("Failed with exception");

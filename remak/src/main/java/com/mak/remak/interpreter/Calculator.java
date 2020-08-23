@@ -28,21 +28,21 @@ public class Calculator {
 		}
 		return 9999;
 	}
-	
+
 	protected static Boolean getBoolVal(int val) {
 		return val > 0;
 	}
-	
+
 	protected static int calculate(String operand, int leftValueInt, int rightValueInt) throws InterpreterException {
 		try {
 			switch (operand) {
 			case "AND":
-				if ( getBoolVal(leftValueInt) && getBoolVal(rightValueInt) ){
+				if (getBoolVal(leftValueInt) && getBoolVal(rightValueInt)) {
 					return 1;
 				}
 				return 0;
 			case "OR":
-				if ( getBoolVal(leftValueInt) || getBoolVal(rightValueInt) ){
+				if (getBoolVal(leftValueInt) || getBoolVal(rightValueInt)) {
 					return 1;
 				}
 				return 0;
@@ -82,7 +82,7 @@ public class Calculator {
 			case "/":
 				return leftValueInt / rightValueInt;
 			case "NOT":
-				if ( getBoolVal(rightValueInt) ){
+				if (getBoolVal(rightValueInt)) {
 					return 0;
 				}
 				return 1;
@@ -93,6 +93,5 @@ public class Calculator {
 		}
 		return 0;
 	}
-	
-	
+
 }
