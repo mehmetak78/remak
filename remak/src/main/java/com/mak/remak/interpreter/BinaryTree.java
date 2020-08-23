@@ -10,10 +10,14 @@ public class BinaryTree {
 
 	private Node root = null;
 	private int returnIndex = 0;
+	private Boolean showCalculation = false;
 
-
-
-	public static BinaryTree parseExpression(String str) throws InterpreterException {
+	public BinaryTree(Boolean showCalculation) {
+		super();
+		this.showCalculation = showCalculation;
+	}
+	
+	public static BinaryTree parseExpression(String str, Boolean showCalculation) throws InterpreterException {
 		List<String> strList = new ArrayList<String>(Arrays.asList(str.split(" ")));
 		strList.removeAll(Arrays.asList("", null));
 
@@ -21,12 +25,11 @@ public class BinaryTree {
 			return null;
 		}
 		try {
-			return parseExpressionRecursive(strList, 0);
+			return parseExpressionRecursive(strList, 0, showCalculation);
 		} catch (Exception ex) {
 			System.out.println("Error in expression...");
 			return null;
 		}
-
 	}
 
 	private static Boolean checkExpression(List<String> strList) throws InterpreterException {
@@ -52,8 +55,8 @@ public class BinaryTree {
 
 	}
 	
-	private static BinaryTree parseExpressionRecursive(List<String> strList, int index) {
-		BinaryTree bt = new BinaryTree();
+	private static BinaryTree parseExpressionRecursive(List<String> strList, int index, Boolean showCalculation) {
+		BinaryTree bt = new BinaryTree(showCalculation);
 
 		Node newNode = null;
 
@@ -78,7 +81,7 @@ public class BinaryTree {
 					bt.add(newNode);
 					preStr = currStr;
 					newNode = null;
-					BinaryTree bt2 = parseExpressionRecursive(strList, ++i);
+					BinaryTree bt2 = parseExpressionRecursive(strList, ++i, showCalculation);
 					bt.addSubTree(bt2);
 					i = bt2.returnIndex;
 				} else if (preStr == null) {
@@ -113,7 +116,7 @@ public class BinaryTree {
 				preStr = currStr;
 				newNode = null;
 				if (currStr.compareTo("(") == 0) {
-					BinaryTree bt2 = parseExpressionRecursive(strList, ++i);
+					BinaryTree bt2 = parseExpressionRecursive(strList, ++i, showCalculation);
 					bt.addSubTree(bt2);
 					i = bt2.returnIndex;
 				}
@@ -122,9 +125,8 @@ public class BinaryTree {
 		return bt;
 	}
 
-	public Node getRoot() {
-		return root;
-	}
+
+
 
 	private void add(Node newNode) {
 		//System.out.println("Added: " + newNode);
@@ -176,7 +178,10 @@ public class BinaryTree {
 			}
 
 			result = Calculator.calculate(node.value, leftValueInt, rightValueInt);
-			//System.out.println("(" + leftValueInt + node.value + rightValueInt + ") = " + result);
+			if (showCalculation) {
+				System.out.println("(" + leftValueInt + node.value + rightValueInt + ") = " + result);
+			}
+			
 
 		} catch (Exception e) {
 			throw new InterpreterException();
@@ -268,12 +273,12 @@ public class BinaryTree {
 	}
 
 	private void traverseLevelOrder() {
-		if (getRoot() == null) {
+		if (root == null) {
 			return;
 		}
 
 		Queue<Node> nodes = new LinkedList<>();
-		nodes.add(getRoot());
+		nodes.add(root);
 
 		while (!nodes.isEmpty()) {
 

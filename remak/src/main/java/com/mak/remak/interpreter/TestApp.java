@@ -40,7 +40,7 @@ public class TestApp {
 		try {
 			String testStr = " ( ( 3 + 5 ) + 3 ) * 2";
 			System.out.println("Test Exprsn: " + testStr);
-			BinaryTree bt = BinaryTree.parseExpression(testStr);
+			BinaryTree bt = BinaryTree.parseExpression(testStr, true);
 			
 			int result;
 			result = bt.traverseCalculate();
