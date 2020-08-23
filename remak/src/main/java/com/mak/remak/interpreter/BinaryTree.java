@@ -64,17 +64,18 @@ public class BinaryTree {
 		for (int i = index; i < strList.size(); i++) {
 			currStr = strList.get(i);
 
-			if (currStr.compareTo(")") == 0) {
-				bt.returnIndex = i;
-				return bt;
-			}
 
-			else if ((i == index) && (currStr.compareTo("NOT") == 0)) {
-				preStr = currStr;
-			}
 
-			else if (newNode == null) {
-				if (currStr.compareTo("(") == 0) {
+			if (newNode == null) {
+				if (currStr.compareTo(")") == 0) {
+					bt.returnIndex = i;
+					return bt;
+				}
+
+				else if ((i == index) && (currStr.compareTo("NOT") == 0)) {
+					preStr = currStr;
+				}
+				else if (currStr.compareTo("(") == 0) {
 					newNode = new Node("0", "+", "(");
 					bt.add(newNode);
 					preStr = currStr;
