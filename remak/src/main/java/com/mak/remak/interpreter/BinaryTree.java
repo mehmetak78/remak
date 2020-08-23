@@ -142,7 +142,7 @@ public class BinaryTree {
 		if (root != null) {
 			Node node = root;
 			while (!node.right.isValue())
-				node = root.right;
+				node = node.right;
 			node.right = newTree.root;
 			newTree.root.parent = root;
 			newTree.root.isSubTree = true;
