@@ -207,8 +207,9 @@ public class BinaryTree {
 	private void addSubTree(BinaryTree newTree) {
 		if (root != null) {
 			Node node = root;
-			while (!node.right.isValue())
-				node = root.right;
+			while (!node.right.isValue()) {
+				node = node.right;
+			}
 			node.right = newTree.root;
 			newTree.root.parent = root;
 			newTree.root.isSubTree = true;
@@ -266,16 +267,16 @@ public class BinaryTree {
 		else if (newNode.compareTo(current) < 0) {
 			return addParent(current, newNode);
 		}
-		else if (newNode.compareTo(current) == 0) {
-
-			if (Calculator.isUnary(current.value)) {
-				current.right = addRecursive(current.right, newNode);
-				return current;
-			}
-			else {
-				return addParent(current, newNode);
-			}
-		}
+//		else if (newNode.compareTo(current) == 0) {
+//
+//			if (Calculator.isUnary(current.value)) {
+//				current.right = addRecursive(current.right, newNode);
+//				return current;
+//			}
+//			else {
+//				return addParent(current, newNode);
+//			}
+//		}
 		else {
 			newNode.parent = current;
 			if (current.isSubTree) {

@@ -222,7 +222,7 @@ class BinaryTreeTest {
 			BinaryTree bt = BinaryTree.parseExpression(testStr, showCalculation);
 			result = bt.traverseCalculate();
 			System.out.println("Test Result: " + bt + " = " + result + "\n");
-			assertEquals(39, result);
+			assertEquals(-33, result);
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail("Failed with exception");
