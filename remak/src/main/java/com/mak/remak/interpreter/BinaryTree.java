@@ -267,16 +267,16 @@ public class BinaryTree {
 		else if (newNode.compareTo(current) < 0) {
 			return addParent(current, newNode);
 		}
-//		else if (newNode.compareTo(current) == 0) {
-//
-//			if (Calculator.isUnary(current.value)) {
-//				current.right = addRecursive(current.right, newNode);
-//				return current;
-//			}
-//			else {
-//				return addParent(current, newNode);
-//			}
-//		}
+		else if (newNode.compareTo(current) == 0) {
+
+			if (Calculator.isUnary(current.value)) {
+				current.right = addRecursive(current.right, newNode);
+				return current;
+			}
+			else {
+				return addParent(current, newNode);
+			}
+		}
 		else {
 			newNode.parent = current;
 			if (current.isSubTree) {
