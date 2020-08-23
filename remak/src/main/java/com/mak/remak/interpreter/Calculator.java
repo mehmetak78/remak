@@ -33,6 +33,17 @@ public class Calculator {
 		return val > 0;
 	}
 
+	protected static Boolean isUnary(String str) {
+		switch (str) {
+		
+		case "NOT":
+			return true;
+
+		}
+		return false;
+	}
+	
+	
 	protected static int calculate(String operand, int leftValueInt, int rightValueInt) throws InterpreterException {
 		try {
 			switch (operand) {

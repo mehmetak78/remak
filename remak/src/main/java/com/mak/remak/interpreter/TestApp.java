@@ -38,7 +38,7 @@ public class TestApp {
 		System.out.println("testRandom1()");
 
 		try {
-			String testStr = " ( ( 3 + 5 ) + 3 ) * 2";
+			String testStr = "NOT NOT 1 AND 0";
 			System.out.println("Test Exprsn: " + testStr);
 			BinaryTree bt = BinaryTree.parseExpression(testStr, true);
 			

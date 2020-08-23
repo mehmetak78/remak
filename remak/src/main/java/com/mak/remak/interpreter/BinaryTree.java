@@ -54,6 +54,73 @@ public class BinaryTree {
 
 	}
 
+	private static BinaryTree parseExpressionRecursive_OLD(List<String> strList, int index, Boolean showCalculation) {
+		BinaryTree bt = new BinaryTree(showCalculation);
+
+		Node newNode = null;
+		String preStr = null;
+		String currStr = null;
+
+		for (int i = index; i < strList.size(); i++) {
+			currStr = strList.get(i);
+			if (newNode == null) {
+				if (currStr.compareTo(")") == 0) {
+					bt.returnIndex = i;
+
+					return bt;
+				}
+				else if ((i == index) && (currStr.compareTo("NOT") == 0)) {
+
+				}
+				else if (currStr.compareTo("(") == 0) {
+					newNode = new Node("0", "+", "(");
+					bt.add(newNode);
+					newNode = null;
+					BinaryTree bt2 = parseExpressionRecursive(strList, ++i, showCalculation);
+					bt.addSubTree(bt2);
+					i = bt2.returnIndex;
+				}
+				else if (preStr == null) {
+					newNode = new Node();
+					newNode.left = new Node(currStr);
+				}
+				else if (preStr.compareTo("NOT") == 0) {
+					newNode = new Node();
+					newNode.left = new Node("0");
+					newNode.value = "NOT";
+					newNode.right = new Node(currStr);
+					bt.add(newNode);
+					newNode = null;
+				}
+				else {
+					newNode = new Node();
+					newNode.left = new Node(preStr);
+					newNode.value = currStr;
+				}
+			}
+			else if (newNode.value == null) {
+				newNode.value = currStr;
+			}
+			else if (newNode.right == null) {
+				if (currStr.compareTo("NOT") == 0) {
+					newNode.right = new Node("0");
+				}
+				else {
+					newNode.right = new Node(currStr);
+				}
+				bt.add(newNode);
+				newNode = null;
+				if (currStr.compareTo("(") == 0) {
+					BinaryTree bt2 = parseExpressionRecursive(strList, ++i, showCalculation);
+					bt.addSubTree(bt2);
+					i = bt2.returnIndex;
+				}
+			}
+			preStr = currStr;
+		}
+		return bt;
+	}
+
 	private static BinaryTree parseExpressionRecursive(List<String> strList, int index, Boolean showCalculation) {
 		BinaryTree bt = new BinaryTree(showCalculation);
 
@@ -64,67 +131,66 @@ public class BinaryTree {
 		for (int i = index; i < strList.size(); i++) {
 			currStr = strList.get(i);
 
-
-
-			if (newNode == null) {
-				if (currStr.compareTo(")") == 0) {
-					bt.returnIndex = i;
-					return bt;
-				}
-
-				else if ((i == index) && (currStr.compareTo("NOT") == 0)) {
-					preStr = currStr;
-				}
-				else if (currStr.compareTo("(") == 0) {
-					newNode = new Node("0", "+", "(");
-					bt.add(newNode);
-					preStr = currStr;
-					newNode = null;
-					BinaryTree bt2 = parseExpressionRecursive(strList, ++i, showCalculation);
-					bt.addSubTree(bt2);
-					i = bt2.returnIndex;
-				}
-				else if (preStr == null) {
-					newNode = new Node();
-					newNode.left = new Node(currStr);
-					preStr = currStr;
-				}
-				else if (preStr.compareTo("NOT") == 0) {
-					newNode = new Node();
-					newNode.left = new Node("0");
-					newNode.value = "NOT";
-					newNode.right = new Node(currStr);
-					bt.add(newNode);
-					preStr = currStr;
-					newNode = null;
-				}
-				else {
-					newNode = new Node();
-					newNode.left = new Node(preStr);
-					newNode.value = currStr;
-					preStr = currStr;
-				}
+			if (currStr.compareTo(")") == 0) {
+				bt.returnIndex = i;
+				return bt;
 			}
-			else if (newNode.value == null) {
+			else if ((i == index) && (currStr.compareTo("NOT") == 0)) {
+				newNode = new Node();
+				newNode.left = new Node("0");
 				newNode.value = currStr;
-				preStr = currStr;
+				newNode.right = null;
+
 			}
-			else if (newNode.right == null) {
-				if (currStr.compareTo("NOT") == 0) {
-					newNode.right = new Node("0");
-				}
-				else {
-					newNode.right = new Node(currStr);
-				}
+			else if ((i == index) && (currStr.compareTo("(") == 0)) {
+				newNode = new Node("0", "+", "(");
 				bt.add(newNode);
-				preStr = currStr;
 				newNode = null;
-				if (currStr.compareTo("(") == 0) {
-					BinaryTree bt2 = parseExpressionRecursive(strList, ++i, showCalculation);
-					bt.addSubTree(bt2);
-					i = bt2.returnIndex;
+				BinaryTree bt2 = parseExpressionRecursive(strList, ++i, showCalculation);
+				bt.addSubTree(bt2);
+				i = bt2.returnIndex;
+			}
+			else {
+				if (newNode == null) {
+
+					if (preStr == null) {
+						newNode = new Node();
+						newNode.left = new Node(currStr);
+					}
+				/*	else if (preStr.compareTo("NOT") == 0) {
+						newNode = new Node();
+						newNode.left = new Node("0");
+						newNode.value = "NOT";
+						newNode.right = new Node(currStr);
+						bt.add(newNode);
+						newNode = null;
+					}*/
+					else {
+						newNode = new Node();
+						newNode.left = new Node(preStr);
+						newNode.value = currStr;
+					}
+				}
+				else if (newNode.value == null) {
+					newNode.value = currStr;
+				}
+				else if (newNode.right == null) {
+					if (currStr.compareTo("NOT") == 0) {
+						newNode.right = new Node("0");
+					}
+					else {
+						newNode.right = new Node(currStr);
+					}
+					bt.add(newNode);
+					newNode = null;
+					if (currStr.compareTo("(") == 0) {
+						BinaryTree bt2 = parseExpressionRecursive(strList, ++i, showCalculation);
+						bt.addSubTree(bt2);
+						i = bt2.returnIndex;
+					}
 				}
 			}
+			preStr = currStr;
 		}
 		return bt;
 	}
@@ -198,8 +264,18 @@ public class BinaryTree {
 		if ((current == null) || (current.isValue())) {
 			return newNode;
 		}
-		else if (newNode.compareTo(current) <= 0) {
+		else if (newNode.compareTo(current) < 0) {
 			return addParent(current, newNode);
+		}
+		else if (newNode.compareTo(current) == 0) {
+
+			if (Calculator.isUnary(current.value)) {
+				current.right = addRecursive(current.right, newNode);
+				return current;
+			}
+			else {
+				return addParent(current, newNode);
+			}
 		}
 		else {
 			newNode.parent = current;
@@ -223,6 +299,7 @@ public class BinaryTree {
 
 		newNode.parent = current.parent;
 		current.parent = newNode;
+
 		newNode.left = current;
 
 		return newNode;

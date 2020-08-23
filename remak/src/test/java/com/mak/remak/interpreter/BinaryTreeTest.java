@@ -14,10 +14,20 @@ class BinaryTreeTest {
 
 		assertThrows(InterpreterException.class, () -> {
 			BinaryTree bt;
-			bt = BinaryTree.parseExpression(" 3", showCalculation);
+			bt = BinaryTree.parseExpression(" + 3", showCalculation);
+			bt.traverseCalculate();
+		});
+		assertThrows(InterpreterException.class, () -> {
+			BinaryTree bt;
 			bt = BinaryTree.parseExpression("   1  < AND 3", showCalculation);
 			bt.traverseCalculate();
 		});
+		assertThrows(InterpreterException.class, () -> {
+			BinaryTree bt;
+			bt = BinaryTree.parseExpression(" NOT NOT 1 AND 0", showCalculation);
+			bt.traverseCalculate();
+		});
+		
 
 		System.out.println();
 
