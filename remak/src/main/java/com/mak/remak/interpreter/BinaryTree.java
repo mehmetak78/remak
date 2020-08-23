@@ -127,7 +127,7 @@ public class BinaryTree {
 	}
 
 	private void add(Node newNode) {
-		System.out.println("Added: " + newNode);
+		//System.out.println("Added: " + newNode);
 		if (root == null) {
 			root = newNode;
 		} else {
@@ -176,7 +176,7 @@ public class BinaryTree {
 			}
 
 			result = Calculator.calculate(node.value, leftValueInt, rightValueInt);
-			System.out.println("(" + leftValueInt + node.value + rightValueInt + ") = " + result);
+			//System.out.println("(" + leftValueInt + node.value + rightValueInt + ") = " + result);
 
 		} catch (Exception e) {
 			throw new InterpreterException();
@@ -224,9 +224,15 @@ public class BinaryTree {
 	private String traverseInOrder(String outStr , Node node) {
 		
 		if (node != null) {
+			if (node.isSubTree) {
+				outStr += " (";
+			}
 			outStr = traverseInOrder(outStr, node.left);
 			outStr =outStr + " " + node.value;
 			outStr = traverseInOrder(outStr, node.right);
+			if (node.isSubTree) {
+				outStr += " )";
+			}
 		}
 		return outStr;
 	}
@@ -234,10 +240,16 @@ public class BinaryTree {
 	
 	
 	
+	/*********************************
+	 * 
+	 * 
+	 * Functions below are for Extra Information. Not in Use Now
+	 * 
+	 * 
+	 * 
+	 * ********************************/
 	
 	
-	
-	// Functions below are for Extra Information. Not in Use Now
 
 	private void traversePreOrder(Node node) {
 		if (node != null) {

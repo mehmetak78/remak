@@ -38,11 +38,13 @@ public class TestApp {
 		System.out.println("testRandom1()");
 
 		try {
-			BinaryTree bt = BinaryTree.parseExpression(" 3 + 5 * 2");
-			System.out.println(bt);
+			String testStr = " ( ( 3 + 5 ) + 3 ) * 2";
+			System.out.println("Test Exprsn: " + testStr);
+			BinaryTree bt = BinaryTree.parseExpression(testStr);
+			
 			int result;
 			result = bt.traverseCalculate();
-			System.out.println(result);
+			System.out.println("Test Result: "+bt+" = "+result+"\n");
 		} catch (Exception e) {
 			System.out.println(e);
 		}
