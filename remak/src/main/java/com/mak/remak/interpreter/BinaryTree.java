@@ -135,13 +135,7 @@ public class BinaryTree {
 				bt.returnIndex = i;
 				return bt;
 			}
-			else if ((i == index) && (currStr.compareTo("NOT") == 0)) {
-				newNode = new Node();
-				newNode.left = new Node("0");
-				newNode.value = currStr;
-				newNode.right = null;
-
-			}
+			
 			else if ((i == index) && (currStr.compareTo("(") == 0)) {
 				newNode = new Node("0", "+", "(");
 				bt.add(newNode);
@@ -153,18 +147,16 @@ public class BinaryTree {
 			else {
 				if (newNode == null) {
 
-					if (preStr == null) {
+					if (Calculator.isUnary(currStr)) {
+						newNode = new Node();
+						newNode.left = new Node("0");
+						newNode.value = currStr;
+						newNode.right = null;
+					}
+					else if (preStr == null) {
 						newNode = new Node();
 						newNode.left = new Node(currStr);
 					}
-				/*	else if (preStr.compareTo("NOT") == 0) {
-						newNode = new Node();
-						newNode.left = new Node("0");
-						newNode.value = "NOT";
-						newNode.right = new Node(currStr);
-						bt.add(newNode);
-						newNode = null;
-					}*/
 					else {
 						newNode = new Node();
 						newNode.left = new Node(preStr);
@@ -175,14 +167,21 @@ public class BinaryTree {
 					newNode.value = currStr;
 				}
 				else if (newNode.right == null) {
-					if (currStr.compareTo("NOT") == 0) {
+					if (Calculator.isUnary(currStr)) {
 						newNode.right = new Node("0");
+						bt.add(newNode);
+						newNode = new Node();
+						newNode.left = new Node("0");
+						newNode.value = currStr;
+						newNode.right = null;
+						new Node(currStr);
 					}
 					else {
 						newNode.right = new Node(currStr);
+						bt.add(newNode);
+						newNode = null;
 					}
-					bt.add(newNode);
-					newNode = null;
+					
 					if (currStr.compareTo("(") == 0) {
 						BinaryTree bt2 = parseExpressionRecursive(strList, ++i, showCalculation);
 						bt.addSubTree(bt2);
@@ -276,6 +275,26 @@ public class BinaryTree {
 			else {
 				return addParent(current, newNode);
 			}
+		}
+		else {
+			newNode.parent = current;
+			if (current.isSubTree) {
+				return addParent(current, newNode);
+			}
+			else {
+				current.right = addRecursive(current.right, newNode);
+				return current;
+			}
+		}
+	}
+	
+	private Node addRecursive_OLD(Node current, Node newNode) {
+
+		if ((current == null) || (current.isValue())) {
+			return newNode;
+		}
+		else if (newNode.compareTo(current) <= 0) {
+			return addParent(current, newNode);
 		}
 		else {
 			newNode.parent = current;

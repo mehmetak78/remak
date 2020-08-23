@@ -22,11 +22,11 @@ class BinaryTreeTest {
 			bt = BinaryTree.parseExpression("   1  < AND 3", showCalculation);
 			bt.traverseCalculate();
 		});
-		assertThrows(InterpreterException.class, () -> {
-			BinaryTree bt;
-			bt = BinaryTree.parseExpression(" NOT NOT 1 AND 0", showCalculation);
-			bt.traverseCalculate();
-		});
+//		assertThrows(InterpreterException.class, () -> {
+//			BinaryTree bt;
+//			bt = BinaryTree.parseExpression(" NOT NOT 1 AND 0", showCalculation);
+//			bt.traverseCalculate();
+//		});
 		
 
 		System.out.println();
@@ -294,6 +294,24 @@ class BinaryTreeTest {
 			assertEquals(1, result);
 		} catch (Exception e) {
 			System.out.println(e);
+			fail("Failed with exception");
+		}
+	}
+	
+	@Test
+	void testUnaryOperation() {
+		System.out.println("testUnaryOperation()");
+		try {
+			String testStr = "NOT NOT 1 AND 0";
+			System.out.println("Test Exprsn: " + testStr);
+			BinaryTree bt = BinaryTree.parseExpression(testStr, true);
+			
+			int result;
+			result = bt.traverseCalculate();
+			System.out.println("Test Result: "+bt+" = "+result+"\n");
+			assertEquals(0, result);
+		} catch (Exception e) {
+			e.printStackTrace();
 			fail("Failed with exception");
 		}
 	}
