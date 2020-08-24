@@ -1,6 +1,6 @@
 package com.mak.remak.interpreter;
 
-public class TestApp {
+public class TestAppBTInterpreter {
 
 	private static void sameToCompare() {
 //		BinaryTree bt = new BinaryTree();
@@ -35,7 +35,7 @@ public class TestApp {
 
 		// sameToCompare();
 
-		System.out.println("testRandom1()");
+		System.out.println("TestAppBTInterpreter");
 
 		try {
 			String testStr = " 2 * ( 3 + 2 )";
