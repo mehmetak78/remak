@@ -38,7 +38,7 @@ public class TestApp {
 		System.out.println("testRandom1()");
 
 		try {
-			String testStr = " 5 * 2 * 2 * ( 3 ** 2 )";
+			String testStr = " 2 * ( 3 + 2 )";
 			System.out.println("Test Exprsn: " + testStr);
 			BinaryTree bt = BinaryTree.parseExpression(testStr, true);
 			

@@ -69,7 +69,7 @@ public class BinaryTree {
 				bt.addSubTree(bt2);
 				i = bt2.returnIndex;
 			}
-			
+
 			else if (currStr.compareTo(")") == 0) {
 				bt.returnIndex = i;
 				return bt;
@@ -77,20 +77,20 @@ public class BinaryTree {
 
 			else {
 				if (newNode == null) {
+					newNode = new Node();
 					if (Calculator.isUnary(currStr)) {
-						newNode = new Node();
 						newNode.left = new Node("0");
 						newNode.value = currStr;
 						newNode.right = null;
 					}
-					else if (preStr == null) {
-						newNode = new Node();
-						newNode.left = new Node(currStr);
-					}
 					else {
-						newNode = new Node();
-						newNode.left = new Node(preStr);
-						newNode.value = currStr;
+						if (preStr == null) {
+							newNode.left = new Node(currStr);
+						}
+						else {
+							newNode.left = new Node(preStr);
+							newNode.value = currStr;
+						}
 					}
 				}
 				else if (newNode.value == null) {
