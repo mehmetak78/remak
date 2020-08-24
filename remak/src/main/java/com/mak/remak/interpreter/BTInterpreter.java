@@ -6,18 +6,18 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-public class BinaryTree {
+public class BTInterpreter {
 
 	private Node root = null;
 	private int returnIndex = 0;
 	private Boolean showCalculation = false;
 
-	public BinaryTree(Boolean showCalculation) {
+	public BTInterpreter(Boolean showCalculation) {
 		super();
 		this.showCalculation = showCalculation;
 	}
 
-	public static BinaryTree parseExpression(String str, Boolean showCalculation) throws InterpreterException {
+	public static BTInterpreter parseExpression(String str, Boolean showCalculation) throws InterpreterException {
 		List<String> strList = new ArrayList<String>(Arrays.asList(str.split(" ")));
 		strList.removeAll(Arrays.asList("", null));
 
@@ -51,8 +51,8 @@ public class BinaryTree {
 		return true;
 	}
 
-	private static BinaryTree parseExpressionRecursive(List<String> strList, int index, Boolean showCalculation) {
-		BinaryTree bt = new BinaryTree(showCalculation);
+	private static BTInterpreter parseExpressionRecursive(List<String> strList, int index, Boolean showCalculation) {
+		BTInterpreter bt = new BTInterpreter(showCalculation);
 
 		Node newNode = null;
 		String preStr = null;
@@ -65,7 +65,7 @@ public class BinaryTree {
 				newNode = new Node("0", "+", "(");
 				bt.add(newNode);
 				newNode = null;
-				BinaryTree bt2 = parseExpressionRecursive(strList, ++i, showCalculation);
+				BTInterpreter bt2 = parseExpressionRecursive(strList, ++i, showCalculation);
 				bt.addSubTree(bt2);
 				i = bt2.returnIndex;
 			}
@@ -113,7 +113,7 @@ public class BinaryTree {
 					}
 
 					if (currStr.compareTo("(") == 0) {
-						BinaryTree bt2 = parseExpressionRecursive(strList, ++i, showCalculation);
+						BTInterpreter bt2 = parseExpressionRecursive(strList, ++i, showCalculation);
 						bt.addSubTree(bt2);
 						i = bt2.returnIndex;
 					}
@@ -157,7 +157,7 @@ public class BinaryTree {
 		return newNode;
 	}
 
-	private void addSubTree(BinaryTree newTree) {
+	private void addSubTree(BTInterpreter newTree) {
 		if (root != null) {
 			Node node = root;
 			while (!node.right.isValue()) {

@@ -40,7 +40,7 @@ public class TestApp {
 		try {
 			String testStr = " 2 * ( 3 + 2 )";
 			System.out.println("Test Exprsn: " + testStr);
-			BinaryTree bt = BinaryTree.parseExpression(testStr, true);
+			BTInterpreter bt = BTInterpreter.parseExpression(testStr, true);
 			
 			int result;
 			result = bt.traverseCalculate();
