@@ -36,7 +36,6 @@ public class BinaryTree {
 		if (strList.size() < 3) {
 			throw new InterpreterException("Error in expression... Invalid number of arguments");
 		}
-
 		int paranthesesCount = 0;
 		for (String str : strList) {
 			if (str.compareTo("(") == 0) {
@@ -49,76 +48,7 @@ public class BinaryTree {
 		if (paranthesesCount != 0) {
 			throw new InterpreterException("Error in expression... Invalid number of parantheses");
 		}
-
 		return true;
-
-	}
-
-	private static BinaryTree parseExpressionRecursive_OLD(List<String> strList, int index, Boolean showCalculation) {
-		BinaryTree bt = new BinaryTree(showCalculation);
-
-		Node newNode = null;
-		String preStr = null;
-		String currStr = null;
-
-		for (int i = index; i < strList.size(); i++) {
-			currStr = strList.get(i);
-			if (newNode == null) {
-				if (currStr.compareTo(")") == 0) {
-					bt.returnIndex = i;
-
-					return bt;
-				}
-				else if ((i == index) && (currStr.compareTo("NOT") == 0)) {
-
-				}
-				else if (currStr.compareTo("(") == 0) {
-					newNode = new Node("0", "+", "(");
-					bt.add(newNode);
-					newNode = null;
-					BinaryTree bt2 = parseExpressionRecursive(strList, ++i, showCalculation);
-					bt.addSubTree(bt2);
-					i = bt2.returnIndex;
-				}
-				else if (preStr == null) {
-					newNode = new Node();
-					newNode.left = new Node(currStr);
-				}
-				else if (preStr.compareTo("NOT") == 0) {
-					newNode = new Node();
-					newNode.left = new Node("0");
-					newNode.value = "NOT";
-					newNode.right = new Node(currStr);
-					bt.add(newNode);
-					newNode = null;
-				}
-				else {
-					newNode = new Node();
-					newNode.left = new Node(preStr);
-					newNode.value = currStr;
-				}
-			}
-			else if (newNode.value == null) {
-				newNode.value = currStr;
-			}
-			else if (newNode.right == null) {
-				if (currStr.compareTo("NOT") == 0) {
-					newNode.right = new Node("0");
-				}
-				else {
-					newNode.right = new Node(currStr);
-				}
-				bt.add(newNode);
-				newNode = null;
-				if (currStr.compareTo("(") == 0) {
-					BinaryTree bt2 = parseExpressionRecursive(strList, ++i, showCalculation);
-					bt.addSubTree(bt2);
-					i = bt2.returnIndex;
-				}
-			}
-			preStr = currStr;
-		}
-		return bt;
 	}
 
 	private static BinaryTree parseExpressionRecursive(List<String> strList, int index, Boolean showCalculation) {
@@ -131,12 +61,7 @@ public class BinaryTree {
 		for (int i = index; i < strList.size(); i++) {
 			currStr = strList.get(i);
 
-			if (currStr.compareTo(")") == 0) {
-				bt.returnIndex = i;
-				return bt;
-			}
-			
-			else if ((i == index) && (currStr.compareTo("(") == 0)) {
+			if ((i == index) && (currStr.compareTo("(") == 0)) {
 				newNode = new Node("0", "+", "(");
 				bt.add(newNode);
 				newNode = null;
@@ -144,9 +69,14 @@ public class BinaryTree {
 				bt.addSubTree(bt2);
 				i = bt2.returnIndex;
 			}
+			
+			else if (currStr.compareTo(")") == 0) {
+				bt.returnIndex = i;
+				return bt;
+			}
+
 			else {
 				if (newNode == null) {
-
 					if (Calculator.isUnary(currStr)) {
 						newNode = new Node();
 						newNode.left = new Node("0");
@@ -181,7 +111,7 @@ public class BinaryTree {
 						bt.add(newNode);
 						newNode = null;
 					}
-					
+
 					if (currStr.compareTo("(") == 0) {
 						BinaryTree bt2 = parseExpressionRecursive(strList, ++i, showCalculation);
 						bt.addSubTree(bt2);
@@ -196,12 +126,35 @@ public class BinaryTree {
 
 	private void add(Node newNode) {
 		// System.out.println("Added: " + newNode);
-		if (root == null) {
+		root = root == null ? newNode : addRecursive(root, newNode);
+	}
+
+	private Node addRecursive(Node current, Node newNode) {
+		if (current.isValue()) {
+			return newNode;
+		}
+		else if ((newNode.compareTo(current) < 0)
+				|| ((newNode.compareTo(current) == 0) && (!Calculator.isUnary(current.value))) || (current.isSubTree)) {
+			return addParent(current, newNode);
+		}
+		else {
+			newNode.parent = current;
+			current.right = addRecursive(current.right, newNode);
+			return current;
+		}
+	}
+
+	private Node addParent(Node current, Node newNode) {
+		if (current.parent == null) {
 			root = newNode;
 		}
 		else {
-			root = addRecursive(root, newNode);
+			current.parent.right = newNode;
 		}
+		newNode.parent = current.parent;
+		current.parent = newNode;
+		newNode.left = current;
+		return newNode;
 	}
 
 	private void addSubTree(BinaryTree newTree) {
@@ -247,7 +200,6 @@ public class BinaryTree {
 
 				}
 			}
-
 			result = Calculator.calculate(node.value, leftValueInt, rightValueInt);
 			if (showCalculation) {
 				System.out.println("(" + leftValueInt + node.value + rightValueInt + ") = " + result);
@@ -257,72 +209,6 @@ public class BinaryTree {
 			throw new InterpreterException();
 		}
 		return result;
-	}
-
-	private Node addRecursive(Node current, Node newNode) {
-
-		if ((current == null) || (current.isValue())) {
-			return newNode;
-		}
-		else if (newNode.compareTo(current) < 0) {
-			return addParent(current, newNode);
-		}
-		else if (newNode.compareTo(current) == 0) {
-
-			if (Calculator.isUnary(current.value)) {
-				current.right = addRecursive(current.right, newNode);
-				return current;
-			}
-			else {
-				return addParent(current, newNode);
-			}
-		}
-		else {
-			newNode.parent = current;
-			if (current.isSubTree) {
-				return addParent(current, newNode);
-			}
-			else {
-				current.right = addRecursive(current.right, newNode);
-				return current;
-			}
-		}
-	}
-	
-	private Node addRecursive_OLD(Node current, Node newNode) {
-
-		if ((current == null) || (current.isValue())) {
-			return newNode;
-		}
-		else if (newNode.compareTo(current) <= 0) {
-			return addParent(current, newNode);
-		}
-		else {
-			newNode.parent = current;
-			if (current.isSubTree) {
-				return addParent(current, newNode);
-			}
-			else {
-				current.right = addRecursive(current.right, newNode);
-				return current;
-			}
-		}
-	}
-
-	private Node addParent(Node current, Node newNode) {
-		if (current.parent == null) {
-			root = newNode;
-		}
-		else {
-			current.parent.right = newNode;
-		}
-
-		newNode.parent = current.parent;
-		current.parent = newNode;
-
-		newNode.left = current;
-
-		return newNode;
 	}
 
 	@Override

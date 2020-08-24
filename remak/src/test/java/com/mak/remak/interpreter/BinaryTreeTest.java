@@ -11,7 +11,6 @@ class BinaryTreeTest {
 	@Test
 	void testExpressionErrors() {
 		System.out.println("testExpressionErrors()");
-
 		assertThrows(InterpreterException.class, () -> {
 			BinaryTree bt;
 			bt = BinaryTree.parseExpression(" + 3", showCalculation);
@@ -22,12 +21,7 @@ class BinaryTreeTest {
 			bt = BinaryTree.parseExpression("   1  < AND 3", showCalculation);
 			bt.traverseCalculate();
 		});
-//		assertThrows(InterpreterException.class, () -> {
-//			BinaryTree bt;
-//			bt = BinaryTree.parseExpression(" NOT NOT 1 AND 0", showCalculation);
-//			bt.traverseCalculate();
-//		});
-		
+	
 
 		System.out.println();
 
@@ -36,7 +30,6 @@ class BinaryTreeTest {
 	@Test
 	void testBasicOperations() {
 		System.out.println("testBasicOperations()");
-
 		try {
 			String testStr = "   1  + 2 * 5 - 2";
 			int result;
@@ -54,7 +47,6 @@ class BinaryTreeTest {
 	@Test
 	void testBasicOperationsWithParanthesesAtStart() {
 		System.out.println("testBasicOperationsWithParanthesesAtStart()");
-
 		try {
 			String testStr = "( 2 + 3 * 2 ) + 3 * 4 + 5";
 			int result;
@@ -72,7 +64,6 @@ class BinaryTreeTest {
 	@Test
 	void testBasicOperationsWithParantheses() {
 		System.out.println("testBasicOperationsWithParantheses()");
-
 		try {
 			String testStr = "1 + ( 2 + 3 ) * 2 ";
 			int result;
@@ -90,7 +81,6 @@ class BinaryTreeTest {
 	@Test
 	void testBasicOperationsWithMultiParantheses() {
 		System.out.println("testBasicOperationsWithMultiParantheses()");
-
 		try {
 			String testStr = "1 + ( ( 2 + 3 ) * 2 ) * ( 4 * ( 3 + 2 * 4 ) )";
 			int result;
@@ -108,7 +98,6 @@ class BinaryTreeTest {
 	@Test
 	void testLogicalOperations() {
 		System.out.println("testLogicalOperations()");
-
 		try {
 			String testStr = "2 + 3 * 6 < 3 * 2 * 2 + 8";
 			int result;
@@ -126,7 +115,6 @@ class BinaryTreeTest {
 	@Test
 	void testLogicalOperationsWithANDOR() {
 		System.out.println("testLogicalOperationsWithANDOR()");
-
 		try {
 			String testStr = "3 < 3 AND 4 < 4 OR 6 < 7";
 			int result;
@@ -144,7 +132,6 @@ class BinaryTreeTest {
 	@Test
 	void testLogicalOperationsWithANDORWithParantheses() {
 		System.out.println("testLogicalOperationsWithANDORWithParantheses()");
-
 		try {
 			String testStr = "3 < 3 AND ( 4 < 4 OR 6 < 7 ) OR 8 < 9";
 			int result;
@@ -162,7 +149,6 @@ class BinaryTreeTest {
 	@Test
 	void testPowerOperation() {
 		System.out.println("testPowerOperation()");
-
 		try {
 			String testStr = "1 * 2 ** 3 * 2";
 			int result;
@@ -319,7 +305,6 @@ class BinaryTreeTest {
 	@Test
 	void testRandom1() {
 		System.out.println("testRandom1()");
-
 		try {
 			String testStr = "( 8 - 4 ) * 4 / 2 + 14 - 7 < 77";
 			int result;
@@ -360,13 +345,13 @@ class BinaryTreeTest {
 		}
 		
 		try {
-			String testStr = "2 * 3 ** 2 * 3 + 2";
+			String testStr = "2 * 3 ** 2 ** 3 + 2";
 			int result;
 			System.out.println("Test Exprsn: " + testStr);
 			BinaryTree bt = BinaryTree.parseExpression(testStr, showCalculation);
 			result = bt.traverseCalculate();
 			System.out.println("Test Result: " + bt + " = " + result + "\n");
-			assertEquals(56, result);
+			assertEquals(1460, result);
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail("Failed with exception");
@@ -385,6 +370,34 @@ class BinaryTreeTest {
 			fail("Failed with exception");
 		}
 		
+		try {
+			String testStr = "2 * 2 ** ( 2 ** ( 1 + 2 ) )";
+			int result;
+			System.out.println("Test Exprsn: " + testStr);
+			BinaryTree bt = BinaryTree.parseExpression(testStr, showCalculation);
+			result = bt.traverseCalculate();
+			System.out.println("Test Result: " + bt + " = " + result + "\n");
+			assertEquals(512, result);
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("Failed with exception");
+		}
 	}
-
+	
+	@Test
+	void testRandom2() {
+		System.out.println("testRandom2()");
+		try {
+			String testStr = "( ( 8 - 4 ) * 2 )  < ( ( ( 1 + 2 ) * 3 ) + 2 * 3 ) ";
+			int result;
+			System.out.println("Test Exprsn: " + testStr);
+			BinaryTree bt = BinaryTree.parseExpression(testStr, showCalculation);
+			result = bt.traverseCalculate();
+			System.out.println("Test Result: " + bt + " = " + result + "\n");
+			assertEquals(1, result);
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("Failed with exception");
+		}
+	}
 }
