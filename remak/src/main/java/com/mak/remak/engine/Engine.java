@@ -72,7 +72,7 @@ public class Engine {
 							}
 							Rule subRule = findRule(subRuleStr);
 							if (subRule != null) {
-								newExpression += " ( " + subRule.getCompiledExpression() + " ) ";
+								newExpression += "( " + subRule.getCompiledExpression() + ") ";
 							}
 							else {
 								throw new EngineException("Exception while compiling rule: " + rule.getName());
@@ -80,7 +80,7 @@ public class Engine {
 							rule.setIsCompiled(false);
 						}
 						else {
-							newExpression += " " + str + " ";
+							newExpression += "" + str + " ";
 
 						}
 					}
