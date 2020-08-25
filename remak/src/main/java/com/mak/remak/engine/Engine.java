@@ -11,18 +11,14 @@ import com.mak.remak.rules.Rule;
 public class Engine {
 
 	private ArrayList<Rule> rules;
-	private ArrayList<Rule> compiledRules;
-	private ArrayList<Rule> selectedRules;
-	
+
 	private Boolean showCalculation = false;
 
 	public Engine() {
 		super();
 		this.rules = new ArrayList<Rule>();
-		this.compiledRules = new ArrayList<Rule>();
-		this.selectedRules = new ArrayList<Rule>();
 	}
-	
+
 	public Engine(Boolean showCalculation) {
 		this();
 		this.showCalculation = showCalculation;
@@ -33,6 +29,7 @@ public class Engine {
 	}
 
 	public void addRule(Rule rule) {
+		rule.setCompiledExpression(rule.getExpression());
 		this.rules.add(rule);
 	}
 
@@ -40,48 +37,80 @@ public class Engine {
 		Collections.sort(rules, Collections.reverseOrder());
 	}
 
-	public void compileRules(Map<String, String> facts) {
+	private Rule findRule(String subRule) {
 		for (Rule rule : rules) {
-			Rule compiledRule = new Rule(rule);
-			String[] strArr = rule.getExpression().split(" ");
-			String newExpression = "";
-			for (String str : strArr) {
-				if (str.startsWith("${")) {
-					String key = str.substring(2, str.length() - 1);
-					String value = facts.get(key);
-					newExpression += " " + value + " ";
-				}
-				else {
-					newExpression += " " + str + " ";
-				}
+			if (rule.getName().compareTo(subRule) == 0) {
+				return rule;
 			}
-			compiledRule.setExpression(newExpression);
-			compiledRules.add(compiledRule);
+		}
+		return null;
+	}
+
+	public void compileRules(Map<String, String> facts) throws EngineException {
+		Boolean hasSubRule = true;
+		while (hasSubRule) {
+			hasSubRule = false;
+			for (Rule rule : rules) {
+				String[] strArr = rule.getCompiledExpression().split(" ");
+				String newExpression = "";
+				for (String str : strArr) {
+					if (str.startsWith("${")) {
+						String key = str.substring(2, str.length() - 1);
+						String value = facts.get(key);
+						if (value == null) {
+							throw new EngineException("Invalid parameter in the rule: " + rule.getName());
+						}
+						newExpression += " " + value + " ";
+					}
+					else if (str.startsWith("@{")) {
+						hasSubRule = true;
+						String subRuleStr = str.substring(2, str.length() - 1);
+						if (rule.getName().compareTo(subRuleStr) == 0) {
+							throw new EngineException("Cyclic rule is not allowed. Check rule: " + rule.getName());
+						}
+						Rule subRule = findRule(subRuleStr);
+						if (subRule != null) {
+							newExpression += " ( " + subRule.getCompiledExpression()+ " ) ";
+						}
+						else {
+							throw new EngineException("Exception while compiling rule: " + rule.getName());
+						}
+					}
+					else {
+						newExpression += " " + str + " ";
+					}
+				}
+				rule.setCompiledExpression(newExpression);
+			}
 		}
 	}
 
-	public void selectCompiledRules() {
-		for (Rule compiledRule : compiledRules) {
+	public void selectCompiledRules() throws EngineException {
+		for (Rule rule : rules) {
 			BTInterpreter bt;
 			try {
-				bt = BTInterpreter.parseExpression(compiledRule.getExpression(), this.showCalculation);
+				bt = BTInterpreter.parseExpression(rule.getCompiledExpression(), this.showCalculation);
 				int result = bt.traverseCalculate();
 				if (result > 0) {
-					selectedRules.add(compiledRule);
+					rule.setIsSelected(true);
 				}
 				if (this.showCalculation) {
-					System.out.println(compiledRule + ":" + result);
+					System.out.println(rule + ":" + result);
 				}
 			} catch (InterpreterException e) {
 				e.printStackTrace();
+				throw new EngineException("Exception while selecting compiled rule: " + rule.getName());
 			}
 		}
 	}
 
 	public void printSelectedRules() {
-		sortRules(selectedRules);
-		for (Rule selectedRule : selectedRules) {
-			System.out.println(selectedRule);
+		System.out.println("printSelectedRules()");
+		sortRules(rules);
+		for (Rule rule : rules) {
+			if (rule.getIsSelected()) {
+				System.out.println(rule);
+			}
 		}
 	}
 

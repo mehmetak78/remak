@@ -5,9 +5,11 @@ public class Rule implements Comparable<Rule>{
 	private String nameSpace = "com.mak.remak.rules";
 	private String name = null;
 	private String expression = null;
+	private String compiledExpression = null;
 	private String description = null;
 	private Integer priority = 0;
 	private String action = null;
+	private Boolean isSelected = false;
 	
 	public Rule(String nameSpace, String name, String expression, String description, Integer priority, String action) {
 		super();
@@ -69,6 +71,14 @@ public class Rule implements Comparable<Rule>{
 	public void setExpression(String expression) {
 		this.expression = expression;
 	}
+	
+	public String getCompiledExpression() {
+		return compiledExpression;
+	}
+
+	public void setCompiledExpression(String compiledExpression) {
+		this.compiledExpression = compiledExpression;
+	}
 
 	public String getDescription() {
 		return description;
@@ -93,6 +103,14 @@ public class Rule implements Comparable<Rule>{
 	public void setAction(String action) {
 		this.action = action;
 	}
+	
+	public Boolean getIsSelected() {
+		return isSelected;
+	}
+
+	public void setIsSelected(Boolean isSelected) {
+		this.isSelected = isSelected;
+	}
 
 	@Override
 	public int compareTo(Rule o) {
@@ -107,9 +125,13 @@ public class Rule implements Comparable<Rule>{
 
 	@Override
 	public String toString() {
-		return "Rule [nameSpace=" + nameSpace + ", name=" + name + ", expression=" + expression + ", description="
+		return "Rule [nameSpace=" + nameSpace + ", name=" + name + ", expression=" + expression + ", compiledExpression=" + compiledExpression + ", description="
 				+ description + ", priority=" + priority + ", action=" + action + "]";
 	}
+
+
+
+
 	
 	
 }

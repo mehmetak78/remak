@@ -17,8 +17,8 @@ public class BTInterpreter {
 		this.showCalculation = showCalculation;
 	}
 
-	public static BTInterpreter parseExpression(String str, Boolean showCalculation) throws InterpreterException {
-		List<String> strList = new ArrayList<String>(Arrays.asList(str.split(" ")));
+	public static BTInterpreter parseExpression(String expression, Boolean showCalculation) throws InterpreterException {
+		List<String> strList = new ArrayList<String>(Arrays.asList(expression.split(" ")));
 		strList.removeAll(Arrays.asList("", null));
 
 		if (!checkExpression(strList)) {
