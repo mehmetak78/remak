@@ -1,4 +1,4 @@
-package com.mak.remak.rules;
+package com.mak.remak.engine;
 
 public class TestAppRules {
 

@@ -6,27 +6,35 @@ import java.util.Map;
 
 import com.mak.remak.interpreter.BTInterpreter;
 import com.mak.remak.interpreter.InterpreterException;
-import com.mak.remak.rules.Rule;
 
 public class Engine {
 
 	private ArrayList<Rule> rules;
+	ArrayList<Rule> selectedRules;
 
 	private Boolean showCalculation = false;
+	private Boolean showRuleSelection = false;
 
 	public Engine() {
 		super();
 		this.rules = new ArrayList<Rule>();
+		this.selectedRules = new ArrayList<Rule>();
 	}
 
-	public Engine(Boolean showCalculation) {
+	public Engine(Boolean showCalculation, Boolean showRuleSelection) {
 		this();
 		this.showCalculation = showCalculation;
+		this.showRuleSelection = showRuleSelection;
 	}
 
 	public ArrayList<Rule> getRules() {
 		return rules;
 	}
+	
+	public ArrayList<Rule> getSelectedRules() {
+		return selectedRules;
+	}
+
 
 	public void addRule(Rule rule) {
 		rule.setCompiledExpression(rule.getExpression());
@@ -92,6 +100,10 @@ public class Engine {
 	}
 
 	public void selectCompiledRules() throws EngineException {
+		
+		if (this.showRuleSelection) {
+			System.out.println("\nselectCompiledRules()");
+		}
 		for (Rule rule : rules) {
 			BTInterpreter bt;
 			try {
@@ -99,25 +111,30 @@ public class Engine {
 				int result = bt.traverseCalculate();
 				if (result > 0) {
 					rule.setIsSelected(true);
+					getSelectedRules().add(rule);
 				}
-				if (this.showCalculation) {
-					System.out.println(rule + ":" + result);
+				if (this.showRuleSelection) {
+					System.out.println("Result: "+ result +", " + rule );
 				}
 			} catch (InterpreterException e) {
 				e.printStackTrace();
 				throw new EngineException("Exception while selecting compiled rule: " + rule.getName());
 			}
 		}
+		if (getSelectedRules() != null) {
+			sortRules(getSelectedRules());
+		}
 	}
 
 	public void printSelectedRules() {
 		System.out.println("printSelectedRules()");
-		sortRules(rules);
-		for (Rule rule : rules) {
-			if (rule.getIsSelected()) {
-				System.out.println(rule);
-			}
+		for (Rule rule : getSelectedRules()) {
+			System.out.println(rule);
 		}
 	}
+
+
+
+	
 
 }

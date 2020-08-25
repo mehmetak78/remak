@@ -1,14 +1,15 @@
-package com.mak.remak.rules;
+package com.mak.remak.engine;
 
 public class Rule implements Comparable<Rule>{
 
 	private String nameSpace = "com.mak.remak.rules";
 	private String name = null;
 	private String expression = null;
-	private String compiledExpression = null;
 	private String description = null;
 	private Integer priority = 0;
 	private String action = null;
+	
+	private String compiledExpression = null;
 	private Boolean isSelected = false;
 	private Boolean isCompiled = false;
 	
@@ -76,10 +77,11 @@ public class Rule implements Comparable<Rule>{
 	public String getCompiledExpression() {
 		return compiledExpression;
 	}
-
+	
 	public void setCompiledExpression(String compiledExpression) {
 		this.compiledExpression = compiledExpression;
 	}
+
 
 	public String getDescription() {
 		return description;
@@ -109,7 +111,7 @@ public class Rule implements Comparable<Rule>{
 		return isSelected;
 	}
 
-	public void setIsSelected(Boolean isSelected) {
+	protected void setIsSelected(Boolean isSelected) {
 		this.isSelected = isSelected;
 	}
 	
@@ -117,7 +119,7 @@ public class Rule implements Comparable<Rule>{
 		return isCompiled;
 	}
 
-	public void setIsCompiled(Boolean isCompiled) {
+	protected void setIsCompiled(Boolean isCompiled) {
 		this.isCompiled = isCompiled;
 	}
 
@@ -137,6 +139,7 @@ public class Rule implements Comparable<Rule>{
 		return "Rule [nameSpace=" + nameSpace + ", name=" + name + ", expression=" + expression + ", compiledExpression=" + compiledExpression + ", description="
 				+ description + ", priority=" + priority + ", action=" + action + "]";
 	}
+
 
 
 

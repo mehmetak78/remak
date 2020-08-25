@@ -170,6 +170,10 @@ public class BTInterpreter {
 	}
 
 	public int traverseCalculate() throws InterpreterException {
+		if (showCalculation) {
+			System.out.println("traverseCalculate()");
+		}
+		
 		return traverseCalculateRecursive(this.root);
 	}
 
