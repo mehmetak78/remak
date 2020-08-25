@@ -10,6 +10,7 @@ public class Rule implements Comparable<Rule>{
 	private Integer priority = 0;
 	private String action = null;
 	private Boolean isSelected = false;
+	private Boolean isCompiled = false;
 	
 	public Rule(String nameSpace, String name, String expression, String description, Integer priority, String action) {
 		super();
@@ -111,6 +112,14 @@ public class Rule implements Comparable<Rule>{
 	public void setIsSelected(Boolean isSelected) {
 		this.isSelected = isSelected;
 	}
+	
+	public Boolean getIsCompiled() {
+		return isCompiled;
+	}
+
+	public void setIsCompiled(Boolean isCompiled) {
+		this.isCompiled = isCompiled;
+	}
 
 	@Override
 	public int compareTo(Rule o) {
@@ -128,6 +137,8 @@ public class Rule implements Comparable<Rule>{
 		return "Rule [nameSpace=" + nameSpace + ", name=" + name + ", expression=" + expression + ", compiledExpression=" + compiledExpression + ", description="
 				+ description + ", priority=" + priority + ", action=" + action + "]";
 	}
+
+
 
 
 

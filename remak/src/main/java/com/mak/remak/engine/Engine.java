@@ -47,40 +47,46 @@ public class Engine {
 	}
 
 	public void compileRules(Map<String, String> facts) throws EngineException {
-		Boolean hasSubRule = true;
-		while (hasSubRule) {
-			hasSubRule = false;
+		Boolean areAllCompiled = true;
+		while (areAllCompiled) {
+			areAllCompiled = false;
 			for (Rule rule : rules) {
-				String[] strArr = rule.getCompiledExpression().split(" ");
-				String newExpression = "";
-				for (String str : strArr) {
-					if (str.startsWith("${")) {
-						String key = str.substring(2, str.length() - 1);
-						String value = facts.get(key);
-						if (value == null) {
-							throw new EngineException("Invalid parameter in the rule: " + rule.getName());
+				if (!rule.getIsCompiled()) {
+					String[] strArr = rule.getCompiledExpression().split(" ");
+					String newExpression = "";
+					rule.setIsCompiled(true);
+					for (String str : strArr) {
+						if (str.startsWith("${")) {
+							String key = str.substring(2, str.length() - 1);
+							String value = facts.get(key);
+							if (value == null) {
+								throw new EngineException("Invalid parameter in the rule: " + rule.getName());
+							}
+							newExpression += " " + value + " ";
 						}
-						newExpression += " " + value + " ";
-					}
-					else if (str.startsWith("@{")) {
-						hasSubRule = true;
-						String subRuleStr = str.substring(2, str.length() - 1);
-						if (rule.getName().compareTo(subRuleStr) == 0) {
-							throw new EngineException("Cyclic rule is not allowed. Check rule: " + rule.getName());
-						}
-						Rule subRule = findRule(subRuleStr);
-						if (subRule != null) {
-							newExpression += " ( " + subRule.getCompiledExpression()+ " ) ";
+						else if (str.startsWith("@{")) {
+							areAllCompiled = true;
+							String subRuleStr = str.substring(2, str.length() - 1);
+							if (rule.getName().compareTo(subRuleStr) == 0) {
+								throw new EngineException("Cyclic rule is not allowed. Check rule: " + rule.getName());
+							}
+							Rule subRule = findRule(subRuleStr);
+							if (subRule != null) {
+								newExpression += " ( " + subRule.getCompiledExpression() + " ) ";
+							}
+							else {
+								throw new EngineException("Exception while compiling rule: " + rule.getName());
+							}
+							rule.setIsCompiled(false);
 						}
 						else {
-							throw new EngineException("Exception while compiling rule: " + rule.getName());
+							newExpression += " " + str + " ";
+
 						}
 					}
-					else {
-						newExpression += " " + str + " ";
-					}
+					rule.setCompiledExpression(newExpression);
 				}
-				rule.setCompiledExpression(newExpression);
+
 			}
 		}
 	}
