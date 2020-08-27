@@ -2,6 +2,7 @@ package com.mak.remak.engine;
 
 import com.mak.remak.engine.actions.Action;
 import com.mak.remak.engine.actions.FIAction;
+import com.mak.remak.engine.rules.Rule;
 
 public class MyEngine extends Engine {
 

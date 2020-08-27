@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.mak.remak.engine.actions.FIAction;
+import com.mak.remak.engine.rules.Rule;
 import com.mak.remak.interpreter.BTInterpreter;
 import com.mak.remak.interpreter.InterpreterException;
 

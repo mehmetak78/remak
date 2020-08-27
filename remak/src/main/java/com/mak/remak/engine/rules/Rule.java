@@ -1,4 +1,4 @@
-package com.mak.remak.engine;
+package com.mak.remak.engine.rules;
 
 public class Rule implements Comparable<Rule>{
 
@@ -111,7 +111,7 @@ public class Rule implements Comparable<Rule>{
 		return isSelected;
 	}
 
-	protected void setIsSelected(Boolean isSelected) {
+	public void setIsSelected(Boolean isSelected) {
 		this.isSelected = isSelected;
 	}
 	
@@ -119,7 +119,7 @@ public class Rule implements Comparable<Rule>{
 		return isCompiled;
 	}
 
-	protected void setIsCompiled(Boolean isCompiled) {
+	public void setIsCompiled(Boolean isCompiled) {
 		this.isCompiled = isCompiled;
 	}
 

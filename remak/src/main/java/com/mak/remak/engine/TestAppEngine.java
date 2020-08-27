@@ -3,6 +3,8 @@ package com.mak.remak.engine;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.mak.remak.engine.rules.Rule;
+
 public class TestAppEngine {
 
 	public static void main(String[] args) {

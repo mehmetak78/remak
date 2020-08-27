@@ -8,6 +8,8 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
+import com.mak.remak.engine.rules.Rule;
+
 class EngineTest {
 
 	@Test
