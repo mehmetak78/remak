@@ -20,8 +20,8 @@ class EngineTest {
 		MyInput input = new MyInput("Input For Test", 111);
 		
 		Map<String, String> facts = new HashMap<String, String>();
-		facts.put("P1", "55");
-		facts.put("P2", "44");
+		facts.put("P1", "11");
+		facts.put("P2", "22");
 		facts.put("P3", "33");
 
 		try {
@@ -30,8 +30,17 @@ class EngineTest {
 			engine.printSelectedRules();
 			Integer result = (Integer) engine.executeBestAction(input);
 			System.out.println("Result: "+result);
-			assertEquals(1, engine.getSelectedRules().size());
+			assertEquals(2, engine.getSelectedRules().size());
 			assertEquals(200, result);
+			
+			ArrayList<Integer> results = (ArrayList<Integer>) engine.executeAllActions(input);
+			assertEquals(2, engine.getSelectedRules().size());
+			assertEquals(2, results.size());
+			assertEquals(200, results.get(0));
+			assertEquals(100, results.get(1));
+			for (Integer result1 : results) {
+				System.out.println("Result: " + result1);
+			}
 
 		} catch (EngineException e) {
 			e.printStackTrace();

@@ -154,6 +154,17 @@ public class Engine {
 		}
 		return null;
 	}
+	
+	public Object executeAllActions(Object input) {
+		ArrayList<Integer> results = new ArrayList<Integer>();
+		for (Rule rule : getSelectedRules()) {
+			FIAction action = actions.get(rule.getAction());
+			if (action != null) {
+				results.add((Integer) action.execute(input));
+			}
+		}
+		return results;
+	}
 
 
 

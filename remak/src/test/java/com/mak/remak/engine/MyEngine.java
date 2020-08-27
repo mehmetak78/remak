@@ -20,14 +20,14 @@ public class MyEngine extends Engine {
 	
 	private void initializeRules() {
 		this.addRule(new Rule("","RULE1", "${P1} < ${P2}", "Desc for rule 1", 2, "action1"));
-		this.addRule(new Rule("","RULE2", "${P3} < ${P2}", "Desc for rule 2", 4, "action2"));
+		this.addRule(new Rule("","RULE2", "${P2} < ${P3}", "Desc for rule 2", 4, "action2"));
 	}
 
 	private void initializeActions() {
 		FIAction<MyInput, Integer> action1 = new Action<MyInput, Integer>("action1") {
 			@Override
 			public Integer execute(MyInput input) {
-				System.out.println("action2 fired:" );
+				System.out.println("action1 fired:" + input);
 				return 100;
 			}
 		};
