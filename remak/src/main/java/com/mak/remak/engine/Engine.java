@@ -144,10 +144,10 @@ public class Engine {
 		this.actions.put(actionName, action);
 	}
 	
-	public Object executeBestAction(Object input) {
+	public <Input,Output> Output executeBestAction(Input input) {
 		if (selectedRules.size()>0) {
 			Rule rule = this.selectedRules.get(0);
-			FIAction action = actions.get(rule.getAction());
+			FIAction<Input,Output> action = (FIAction<Input, Output>) actions.get(rule.getAction());
 			if (action != null) {
 				return action.execute(input);
 			}
@@ -155,12 +155,13 @@ public class Engine {
 		return null;
 	}
 	
-	public Object executeAllActions(Object input) {
-		ArrayList<Integer> results = new ArrayList<Integer>();
+	public <Input,Output> ArrayList<Output> executeAllActions(Input input) {
+		ArrayList<Output> results = new ArrayList<Output>();
 		for (Rule rule : getSelectedRules()) {
-			FIAction action = actions.get(rule.getAction());
+			
+			FIAction<Input, Output> action = (FIAction<Input, Output>) actions.get(rule.getAction());
 			if (action != null) {
-				results.add((Integer) action.execute(input));
+				results.add(action.execute(input));
 			}
 		}
 		return results;

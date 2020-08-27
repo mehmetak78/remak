@@ -28,12 +28,12 @@ class EngineTest {
 			engine.compileRules(facts);
 			engine.selectCompiledRules();
 			engine.printSelectedRules();
-			Integer result = (Integer) engine.executeBestAction(input);
+			Integer result = engine.executeBestAction(input);
 			System.out.println("Result: "+result);
 			assertEquals(2, engine.getSelectedRules().size());
 			assertEquals(200, result);
 			
-			ArrayList<Integer> results = (ArrayList<Integer>) engine.executeAllActions(input);
+			ArrayList<Integer> results = engine.executeAllActions(input);
 			assertEquals(2, engine.getSelectedRules().size());
 			assertEquals(2, results.size());
 			assertEquals(200, results.get(0));
