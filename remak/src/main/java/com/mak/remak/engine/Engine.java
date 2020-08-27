@@ -2,8 +2,10 @@ package com.mak.remak.engine;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
+import com.mak.remak.engine.actions.FIAction;
 import com.mak.remak.interpreter.BTInterpreter;
 import com.mak.remak.interpreter.InterpreterException;
 
@@ -11,14 +13,17 @@ public class Engine {
 
 	private ArrayList<Rule> rules;
 	ArrayList<Rule> selectedRules;
+	
+	private Map<String, FIAction<?, ?>> actions;
 
-	private Boolean showCalculation = false;
-	private Boolean showRuleSelection = false;
+	protected Boolean showCalculation = false;
+	protected Boolean showRuleSelection = false;
 
 	public Engine() {
 		super();
 		this.rules = new ArrayList<Rule>();
 		this.selectedRules = new ArrayList<Rule>();
+		this.actions = new HashMap<String, FIAction<?,?>>();
 	}
 
 	public Engine(Boolean showCalculation, Boolean showRuleSelection) {
@@ -131,6 +136,22 @@ public class Engine {
 		for (Rule rule : getSelectedRules()) {
 			System.out.println(rule);
 		}
+	}
+	
+	
+	public void putAction(String actionName, FIAction<?, ?> action) {
+		this.actions.put(actionName, action);
+	}
+	
+	public Object executeBestAction(Object input) {
+		if (selectedRules.size()>0) {
+			Rule rule = this.selectedRules.get(0);
+			FIAction action = actions.get(rule.getAction());
+			if (action != null) {
+				return action.execute(input);
+			}
+		}
+		return null;
 	}
 
 
