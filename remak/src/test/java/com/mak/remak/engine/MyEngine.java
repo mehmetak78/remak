@@ -27,7 +27,7 @@ public class MyEngine extends Engine {
 		FIAction<MyInput, Integer> action1 = new Action<MyInput, Integer>("action1") {
 			@Override
 			public Integer execute(MyInput input) {
-				System.out.println("Action fired:" );
+				System.out.println("action2 fired:" );
 				return 100;
 			}
 		};
@@ -36,7 +36,7 @@ public class MyEngine extends Engine {
 		FIAction<MyInput, Integer> action2 = new Action<MyInput, Integer>("action2") {
 			@Override
 			public Integer execute(MyInput input) {
-				System.out.println("Action fired:" + input);
+				System.out.println("action2 fired:" + input);
 				return 200;
 			}
 		};
