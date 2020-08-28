@@ -1,0 +1,27 @@
+[
+	{
+		"nameSpace" : "",
+		"name": "RULE1",
+		"expression" : "${P1} < ${P2}",
+		"description": "Description for rule 1",
+		"priority": "2",
+		"action": "action1"
+	},
+	{
+		"nameSpace" : "",
+		"name": "RULE2",
+		"expression" : "${P2} < ${P3}",
+		"description": "Description for rule 2",
+		"priority": "4",
+		"action": "action2"
+	},
+		{
+		"nameSpace" : "",
+		"name": "RULE3",
+		"expression" : "@{RULE1} AND @{RULE2}",
+		"description": "Description for rule 3",
+		"priority": "3",
+		"action": "action3"
+	}
+]
+

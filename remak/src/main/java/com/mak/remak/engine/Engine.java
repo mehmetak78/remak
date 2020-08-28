@@ -1,10 +1,14 @@
 package com.mak.remak.engine;
 
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mak.remak.engine.actions.FIAction;
 import com.mak.remak.engine.rules.Rule;
 import com.mak.remak.interpreter.BTInterpreter;
@@ -12,8 +16,9 @@ import com.mak.remak.interpreter.InterpreterException;
 
 public class Engine {
 
+	protected String rulesFileName;
 	private ArrayList<Rule> rules;
-	ArrayList<Rule> selectedRules;
+	private ArrayList<Rule> selectedRules;
 	
 	private Map<String, FIAction<?, ?>> actions;
 
@@ -26,11 +31,24 @@ public class Engine {
 		this.selectedRules = new ArrayList<Rule>();
 		this.actions = new HashMap<String, FIAction<?,?>>();
 	}
+	
 
 	public Engine(Boolean showCalculation, Boolean showRuleSelection) {
 		this();
 		this.showCalculation = showCalculation;
 		this.showRuleSelection = showRuleSelection;
+	}
+	
+	public Engine(String rulesFileName) {
+		this();
+		this.rulesFileName = rulesFileName;
+	}
+	
+	public Engine(String rulesFileName, Boolean showCalculation, Boolean showRuleSelection) {
+		this();
+		this.showCalculation = showCalculation;
+		this.showRuleSelection = showRuleSelection;
+		this.rulesFileName = rulesFileName;
 	}
 
 	public ArrayList<Rule> getRules() {
@@ -45,6 +63,18 @@ public class Engine {
 	public void addRule(Rule rule) {
 		rule.setCompiledExpression(rule.getExpression());
 		this.rules.add(rule);
+	}
+	
+	public void addRulesFromFile() {
+		ObjectMapper objectMapper = new ObjectMapper();
+		try {
+			this.rules = (ArrayList<Rule>) objectMapper.readValue(Paths.get(this.rulesFileName).toFile(), new TypeReference<List<Rule>>() {});
+			for (Rule rule : rules) {
+				rule.setCompiledExpression(rule.getExpression());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void sortRules(ArrayList<Rule> rules) {
@@ -147,6 +177,7 @@ public class Engine {
 	public <Input,Output> Output executeBestAction(Input input) {
 		if (selectedRules.size()>0) {
 			Rule rule = this.selectedRules.get(0);
+			@SuppressWarnings("unchecked")
 			FIAction<Input,Output> action = (FIAction<Input, Output>) actions.get(rule.getAction());
 			if (action != null) {
 				return action.execute(input);
@@ -159,6 +190,7 @@ public class Engine {
 		ArrayList<Output> results = new ArrayList<Output>();
 		for (Rule rule : getSelectedRules()) {
 			
+			@SuppressWarnings("unchecked")
 			FIAction<Input, Output> action = (FIAction<Input, Output>) actions.get(rule.getAction());
 			if (action != null) {
 				results.add(action.execute(input));

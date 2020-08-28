@@ -8,17 +8,15 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
-import com.mak.remak.engine.rules.Rule;
-
-class EngineTest {
+class MyEngineTest {
 
 	@Test
 	void testMyEngine() {
 		System.out.println("\ntestMyEngine()...");
-		
-		MyEngine engine = new MyEngine(false,false);
+
+		MyEngine engine = new MyEngine("target/myRules.json",false, false);
 		MyInput input = new MyInput("Input For Test", 111);
-		
+
 		Map<String, String> facts = new HashMap<String, String>();
 		facts.put("P1", "11");
 		facts.put("P2", "22");
@@ -29,15 +27,16 @@ class EngineTest {
 			engine.selectCompiledRules();
 			engine.printSelectedRules();
 			Integer result = engine.executeBestAction(input);
-			System.out.println("Result: "+result);
-			assertEquals(2, engine.getSelectedRules().size());
+			System.out.println("Result: " + result);
+			assertEquals(3, engine.getSelectedRules().size());
 			assertEquals(200, result);
-			
+
 			ArrayList<Integer> results = engine.executeAllActions(input);
-			assertEquals(2, engine.getSelectedRules().size());
-			assertEquals(2, results.size());
+			assertEquals(3, engine.getSelectedRules().size());
+			assertEquals(3, results.size());
 			assertEquals(200, results.get(0));
-			assertEquals(100, results.get(1));
+			assertEquals(300, results.get(1));
+			assertEquals(100, results.get(2));
 			for (Integer result1 : results) {
 				System.out.println("Result: " + result1);
 			}
@@ -45,6 +44,9 @@ class EngineTest {
 		} catch (EngineException e) {
 			e.printStackTrace();
 		}
+
+
+		
 		
 	}
 
