@@ -18,7 +18,7 @@ class MyEngineTest {
 //		MyInput input = new MyInput("Input For Test", 111);
 		
 		Map<String, String> actionParams = new HashMap<String, String>();
-		actionParams.put("PROFILE", "BOMUD");
+		actionParams.put("MESSAGE", "Hello");
 		
 		Map<String, String> facts = new HashMap<String, String>();
 		facts.put("P1", "11");
