@@ -14,7 +14,7 @@ class MyEngineTest {
 	void testMyEngine() {
 		System.out.println("\ntestMyEngine()...");
 
-		MyEngine engine = new MyEngine("target/myRules.json",false, false);
+		MyEngine engine = new MyEngine(false, false);
 		MyInput input = new MyInput("Input For Test", 111);
 
 		Map<String, String> facts = new HashMap<String, String>();

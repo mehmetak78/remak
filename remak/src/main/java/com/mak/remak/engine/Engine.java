@@ -16,7 +16,6 @@ import com.mak.remak.interpreter.InterpreterException;
 
 public class Engine {
 
-	protected String rulesFileName;
 	private ArrayList<Rule> rules;
 	private ArrayList<Rule> selectedRules;
 	
@@ -39,18 +38,6 @@ public class Engine {
 		this.showRuleSelection = showRuleSelection;
 	}
 	
-	public Engine(String rulesFileName) {
-		this();
-		this.rulesFileName = rulesFileName;
-	}
-	
-	public Engine(String rulesFileName, Boolean showCalculation, Boolean showRuleSelection) {
-		this();
-		this.showCalculation = showCalculation;
-		this.showRuleSelection = showRuleSelection;
-		this.rulesFileName = rulesFileName;
-	}
-
 	public ArrayList<Rule> getRules() {
 		return rules;
 	}
@@ -65,10 +52,10 @@ public class Engine {
 		this.rules.add(rule);
 	}
 	
-	public void addRulesFromFile() {
+	public void addRulesFromFile(String fileName) {
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
-			this.rules = (ArrayList<Rule>) objectMapper.readValue(Paths.get(this.rulesFileName).toFile(), new TypeReference<List<Rule>>() {});
+			this.rules = (ArrayList<Rule>) objectMapper.readValue(Paths.get(fileName).toFile(), new TypeReference<List<Rule>>() {});
 			for (Rule rule : rules) {
 				rule.setCompiledExpression(rule.getExpression());
 			}
