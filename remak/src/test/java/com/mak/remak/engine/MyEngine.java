@@ -8,44 +8,45 @@ import com.mak.remak.engine.rules.Rule;
 
 public class MyEngine extends Engine {
 
-	public MyEngine() {
+	public MyEngine() throws EngineException {
 		super();
 		initializeActions();
 		initializeRules();
 	}
 
-	public MyEngine(Boolean showCalculation, Boolean showRuleSelection) {
+	public MyEngine(Boolean showCalculation, Boolean showRuleSelection) throws EngineException {
 		super(showCalculation, showRuleSelection);
 		initializeRules();
 		initializeActions();
 	}
 
-	private void initializeRules() {
-		this.addRulesFromFile("target/myRules.json");//			this.addRule(new Rule("", "RULE1", "${P1} < ${P2}", "Desc for rule 1", 2, "action1"));
+	private void initializeRules() throws EngineException {
+		this.addRulesFromFile("target/myRules.json");
+//			this.addRule(new Rule("", "RULE1", "${P1} < ${P2}", "Desc for rule 1", 2, "action1"));
 	}
 
 	private void initializeActions() {
-		FIAction<Map<String,String>, Integer> action1 = new Action<Map<String,String>, Integer>("action1") {
+		FIAction<Map<String, String>, Integer> action1 = new Action<Map<String, String>, Integer>("action1") {
 			@Override
-			public Integer execute(Map<String,String> input) {
-				//System.out.println("action1 fired:" + input.get("PROFILE"));
+			public Integer execute(Map<String, String> input) {
+				// System.out.println("action1 fired:" + input.get("PROFILE"));
 				return 100;
 			}
 		};
 		this.putAction("action1", action1);
 
-		FIAction<Map<String,String>, Integer> action2 = new Action<Map<String,String>, Integer>("action2") {
+		FIAction<Map<String, String>, Integer> action2 = new Action<Map<String, String>, Integer>("action2") {
 			@Override
-			public Integer execute(Map<String,String> input) {
+			public Integer execute(Map<String, String> input) {
 				System.out.println("action2 fired:" + input);
 				return 200;
 			}
 		};
 		this.putAction("action2", action2);
-		
-		FIAction<Map<String,String>, Integer> action3 = new Action<Map<String,String>, Integer>("action3") {
+
+		FIAction<Map<String, String>, Integer> action3 = new Action<Map<String, String>, Integer>("action3") {
 			@Override
-			public Integer execute(Map<String,String> input) {
+			public Integer execute(Map<String, String> input) {
 				System.out.println("action3 fired:" + input);
 				return 300;
 			}

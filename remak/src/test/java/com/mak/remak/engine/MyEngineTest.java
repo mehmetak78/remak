@@ -14,18 +14,17 @@ class MyEngineTest {
 	void testMyEngine() {
 		System.out.println("\ntestMyEngine()...");
 
-		MyEngine engine = new MyEngine(false, false);
-//		MyInput input = new MyInput("Input For Test", 111);
-		
-		Map<String, String> actionParams = new HashMap<String, String>();
-		actionParams.put("MESSAGE", "Hello");
-		
-		Map<String, String> facts = new HashMap<String, String>();
-		facts.put("P1", "11");
-		facts.put("P2", "22");
-		facts.put("P3", "33");
-
 		try {
+			MyEngine engine = new MyEngine(false, false);
+		
+			Map<String, String> actionParams = new HashMap<String, String>();
+			actionParams.put("MESSAGE", "Hello");
+			
+			Map<String, String> facts = new HashMap<String, String>();
+			facts.put("P1", "11");
+			facts.put("P2", "22");
+			facts.put("P3", "33");
+		
 			engine.compileRules(facts);
 			engine.selectCompiledRules();
 			engine.printSelectedRules();

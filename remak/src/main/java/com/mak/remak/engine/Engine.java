@@ -52,7 +52,7 @@ public class Engine {
 		this.rules.add(rule);
 	}
 	
-	public void addRulesFromFile(String fileName) {
+	public void addRulesFromFile(String fileName) throws EngineException{
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
 			this.rules = (ArrayList<Rule>) objectMapper.readValue(Paths.get(fileName).toFile(), new TypeReference<List<Rule>>() {});
@@ -60,7 +60,7 @@ public class Engine {
 				rule.setCompiledExpression(rule.getExpression());
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new EngineException("Exception while reading from the file.");
 		}
 	}
 
