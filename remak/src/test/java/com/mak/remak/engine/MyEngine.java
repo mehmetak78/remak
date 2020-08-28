@@ -1,5 +1,7 @@
 package com.mak.remak.engine;
 
+import java.util.Map;
+
 import com.mak.remak.engine.actions.Action;
 import com.mak.remak.engine.actions.FIAction;
 import com.mak.remak.engine.rules.Rule;
@@ -25,27 +27,27 @@ public class MyEngine extends Engine {
 	}
 
 	private void initializeActions() {
-		FIAction<MyInput, Integer> action1 = new Action<MyInput, Integer>("action1") {
+		FIAction<Map<String,String>, Integer> action1 = new Action<Map<String,String>, Integer>("action1") {
 			@Override
-			public Integer execute(MyInput input) {
-				System.out.println("action1 fired:" + input);
+			public Integer execute(Map<String,String> input) {
+				//System.out.println("action1 fired:" + input.get("PROFILE"));
 				return 100;
 			}
 		};
 		this.putAction("action1", action1);
 
-		FIAction<MyInput, Integer> action2 = new Action<MyInput, Integer>("action2") {
+		FIAction<Map<String,String>, Integer> action2 = new Action<Map<String,String>, Integer>("action2") {
 			@Override
-			public Integer execute(MyInput input) {
+			public Integer execute(Map<String,String> input) {
 				System.out.println("action2 fired:" + input);
 				return 200;
 			}
 		};
 		this.putAction("action2", action2);
-
-		FIAction<MyInput, Integer> action3 = new Action<MyInput, Integer>("action3") {
+		
+		FIAction<Map<String,String>, Integer> action3 = new Action<Map<String,String>, Integer>("action3") {
 			@Override
-			public Integer execute(MyInput input) {
+			public Integer execute(Map<String,String> input) {
 				System.out.println("action3 fired:" + input);
 				return 300;
 			}

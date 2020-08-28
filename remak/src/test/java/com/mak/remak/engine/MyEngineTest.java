@@ -15,8 +15,11 @@ class MyEngineTest {
 		System.out.println("\ntestMyEngine()...");
 
 		MyEngine engine = new MyEngine(false, false);
-		MyInput input = new MyInput("Input For Test", 111);
-
+//		MyInput input = new MyInput("Input For Test", 111);
+		
+		Map<String, String> actionParams = new HashMap<String, String>();
+		actionParams.put("PROFILE", "BOMUD");
+		
 		Map<String, String> facts = new HashMap<String, String>();
 		facts.put("P1", "11");
 		facts.put("P2", "22");
@@ -26,12 +29,12 @@ class MyEngineTest {
 			engine.compileRules(facts);
 			engine.selectCompiledRules();
 			engine.printSelectedRules();
-			Integer result = engine.executeBestAction(input);
+			Integer result = engine.executeBestAction(actionParams);
 			System.out.println("Result: " + result);
 			assertEquals(3, engine.getSelectedRules().size());
 			assertEquals(200, result);
 
-			ArrayList<Integer> results = engine.executeAllActions(input);
+			ArrayList<Integer> results = engine.executeAllActions(actionParams);
 			assertEquals(3, engine.getSelectedRules().size());
 			assertEquals(3, results.size());
 			assertEquals(200, results.get(0));
