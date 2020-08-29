@@ -1,10 +1,11 @@
-package com.mak.remak.engine;
+package com.mak.remak.engine.engines;
 
-import java.util.Map;
 
+import com.mak.remak.engine.Engine;
+import com.mak.remak.engine.EngineException;
 import com.mak.remak.engine.actions.Action;
+import com.mak.remak.engine.actions.ActionParams;
 import com.mak.remak.engine.actions.FIAction;
-import com.mak.remak.engine.rules.Rule;
 
 public class MyEngine extends Engine {
 
@@ -26,32 +27,34 @@ public class MyEngine extends Engine {
 	}
 
 	private void initializeActions() {
-		FIAction<Map<String, String>, Integer> action1 = new Action<Map<String, String>, Integer>("action1") {
+		
+		FIAction<ActionParams, String> action1 = new Action<ActionParams, String>("action1") {
 			@Override
-			public Integer execute(Map<String, String> input) {
-				// System.out.println("action1 fired:" + input.get("PROFILE"));
-				return 100;
+			public String execute(ActionParams input) {
+			 System.out.println("action1 fired:" + input.getParam("MESSAGE"));
+				return "100";
 			}
 		};
 		this.putAction("action1", action1);
 
-		FIAction<Map<String, String>, Integer> action2 = new Action<Map<String, String>, Integer>("action2") {
+		FIAction<ActionParams, String> action2 = new Action<ActionParams, String>("action2") {
 			@Override
-			public Integer execute(Map<String, String> input) {
-				System.out.println("action2 fired:" + input);
-				return 200;
+			public String execute(ActionParams input) {
+			 System.out.println("action2 fired:" + input.getParam("MESSAGE"));
+				return "200";
 			}
 		};
 		this.putAction("action2", action2);
 
-		FIAction<Map<String, String>, Integer> action3 = new Action<Map<String, String>, Integer>("action3") {
+		FIAction<ActionParams, String> action3 = new Action<ActionParams, String>("action3") {
 			@Override
-			public Integer execute(Map<String, String> input) {
-				System.out.println("action3 fired:" + input);
-				return 300;
+			public String execute(ActionParams input) {
+			 System.out.println("action3 fired:" + input.getParam("MESSAGE"));
+				return "300";
 			}
 		};
 		this.putAction("action3", action3);
 	}
 
 }
+
