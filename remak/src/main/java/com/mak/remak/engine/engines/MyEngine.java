@@ -22,7 +22,7 @@ public class MyEngine extends Engine {
 	}
 
 	private void initializeRules() throws EngineException {
-		this.addRulesFromFile("target/myRules.json");
+		this.addRulesFromFile("target/rules/myRules.json");
 //			this.addRule(new Rule("", "RULE1", "${P1} < ${P2}", "Desc for rule 1", 2, "action1"));
 	}
 

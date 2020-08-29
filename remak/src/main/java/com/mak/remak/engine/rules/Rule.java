@@ -7,6 +7,7 @@ public class Rule implements Comparable<Rule>{
 	private String expression = null;
 	private String description = null;
 	private Integer priority = 0;
+	private String result = null;
 	private String action = null;
 	
 	private String compiledExpression = null;
@@ -99,6 +100,14 @@ public class Rule implements Comparable<Rule>{
 		this.priority = priority;
 	}
 
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
+	}
+	
 	public String getAction() {
 		return action;
 	}
@@ -139,6 +148,7 @@ public class Rule implements Comparable<Rule>{
 		return "Rule [nameSpace=" + nameSpace + ", name=" + name + ", expression=" + expression + ", compiledExpression=" + compiledExpression + ", description="
 				+ description + ", priority=" + priority + ", action=" + action + "]";
 	}
+
 
 
 

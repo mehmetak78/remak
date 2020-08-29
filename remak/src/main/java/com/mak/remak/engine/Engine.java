@@ -18,7 +18,7 @@ public class Engine {
 
 	private ArrayList<Rule> rules;
 	private ArrayList<Rule> selectedRules;
-	
+
 	private Map<String, FIAction<?, ?>> actions;
 
 	protected Boolean showCalculation = false;
@@ -28,34 +28,34 @@ public class Engine {
 		super();
 		this.rules = new ArrayList<Rule>();
 		this.selectedRules = new ArrayList<Rule>();
-		this.actions = new HashMap<String, FIAction<?,?>>();
+		this.actions = new HashMap<String, FIAction<?, ?>>();
 	}
-	
 
 	public Engine(Boolean showCalculation, Boolean showRuleSelection) {
 		this();
 		this.showCalculation = showCalculation;
 		this.showRuleSelection = showRuleSelection;
 	}
-	
+
 	public ArrayList<Rule> getRules() {
 		return rules;
 	}
-	
+
 	public ArrayList<Rule> getSelectedRules() {
 		return selectedRules;
 	}
-
 
 	public void addRule(Rule rule) {
 		rule.setCompiledExpression(rule.getExpression());
 		this.rules.add(rule);
 	}
-	
-	public void addRulesFromFile(String fileName) throws EngineException{
+
+	public void addRulesFromFile(String fileName) throws EngineException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
-			this.rules = (ArrayList<Rule>) objectMapper.readValue(Paths.get(fileName).toFile(), new TypeReference<List<Rule>>() {});
+			this.rules = (ArrayList<Rule>) objectMapper.readValue(Paths.get(fileName).toFile(),
+					new TypeReference<List<Rule>>() {
+					});
 			for (Rule rule : rules) {
 				rule.setCompiledExpression(rule.getExpression());
 			}
@@ -123,7 +123,7 @@ public class Engine {
 	}
 
 	public void selectCompiledRules() throws EngineException {
-		
+
 		if (this.showRuleSelection) {
 			System.out.println("\nselectCompiledRules()");
 		}
@@ -137,7 +137,7 @@ public class Engine {
 					getSelectedRules().add(rule);
 				}
 				if (this.showRuleSelection) {
-					System.out.println("Result: "+ result +", " + rule );
+					System.out.println("Result: " + result + ", " + rule);
 				}
 			} catch (InterpreterException e) {
 				e.printStackTrace();
@@ -155,17 +155,18 @@ public class Engine {
 			System.out.println(rule);
 		}
 	}
-	
-	
+
 	public void putAction(String actionName, FIAction<?, ?> action) {
 		this.actions.put(actionName, action);
 	}
-	
-	public <Input,Output> Output executeBestAction(Input input) {
-		if (selectedRules.size()>0) {
-			Rule rule = this.selectedRules.get(0);
+
+	private <Input, Output> Output executeAction(Rule rule, Input input) {
+		if (rule.getResult() != null) {
+			return (Output) rule.getResult();
+		}
+		else {
 			@SuppressWarnings("unchecked")
-			FIAction<Input,Output> action = (FIAction<Input, Output>) actions.get(rule.getAction());
+			FIAction<Input, Output> action = (FIAction<Input, Output>) actions.get(rule.getAction());
 			if (action != null) {
 				return action.execute(input);
 			}
@@ -173,21 +174,25 @@ public class Engine {
 		return null;
 	}
 	
-	public <Input,Output> ArrayList<Output> executeAllActions(Input input) {
+	
+	public <Input, Output> Output executeBestAction(Input input) {
+		if (selectedRules.size() > 0) {
+			Rule rule = this.selectedRules.get(0);
+			return executeAction(rule, input);
+		}
+		return null;
+	}
+
+	public <Input, Output> ArrayList<Output> executeAllActions(Input input) {
 		ArrayList<Output> results = new ArrayList<Output>();
 		for (Rule rule : getSelectedRules()) {
-			
-			@SuppressWarnings("unchecked")
-			FIAction<Input, Output> action = (FIAction<Input, Output>) actions.get(rule.getAction());
-			if (action != null) {
-				results.add(action.execute(input));
+
+			Output result = executeAction(rule, input);
+			if (result != null) {
+				results.add(result);
 			}
 		}
 		return results;
 	}
-
-
-
-	
 
 }

@@ -34,14 +34,14 @@ class MyEngineTest {
 			String result = engine.executeBestAction(actionParams1);
 			System.out.println("Result: " + result);
 			assertEquals(3, engine.getSelectedRules().size());
-			assertEquals("200", result);
+			assertEquals("RESULT2", result);
 
 			ArrayList<String> results = engine.executeAllActions(actionParams1);
 			assertEquals(3, engine.getSelectedRules().size());
 			assertEquals(3, results.size());
-			assertEquals("200", results.get(0));
+			assertEquals("RESULT2", results.get(0));
 			assertEquals("300", results.get(1));
-			assertEquals("100", results.get(2));
+			assertEquals("RESULT1", results.get(2));
 			for (String result1 : results) {
 				System.out.println("Result: " + result1);
 			}
