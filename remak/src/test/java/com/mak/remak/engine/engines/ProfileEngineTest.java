@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import com.mak.remak.engine.Engine;
 import com.mak.remak.engine.EngineException;
 import com.mak.remak.engine.actions.ActionParams;
+import com.mak.remak.engine.rules.Rule;
 import com.sun.tools.javac.util.List;
 
 class ProfileEngineTest {
@@ -33,11 +34,17 @@ class ProfileEngineTest {
 			String result = engine.executeBestAction(facts,null);
 			System.out.println("Result: " + result);
 			assertEquals("PROFILE4", result);
-
+			
+			engine.addRule(new Rule("", "RULE5", "${P5} = PROFILE4", "Desc for rule 5", 6, "RESULT4", null));
+			facts.put("P5", result);
+			String result2 = engine.executeBestAction(facts,null);
+			System.out.println("Result2: " + result2);
+			assertEquals("RESULT4", result2);
+			
 			System.out.println("\nExecute All Selected Actions");
 			ArrayList<String> results = engine.executeAllActions(facts,null);
 			System.out.println(results);
-			assertTrue(results.equals(new ArrayList<String>(Arrays.asList("PROFILE4","PROFILE3"))));
+			assertTrue(results.equals(new ArrayList<String>(Arrays.asList("RESULT4","PROFILE4","PROFILE3"))));
 
 		
 		} catch (EngineException e) {

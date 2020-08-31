@@ -15,13 +15,14 @@ public class Rule implements Comparable<Rule>{
 	private Boolean isSelected = false;
 	private Boolean isCompiled = false;
 	
-	public Rule(String nameSpace, String name, String expression, String description, Integer priority, String action) {
+	public Rule(String nameSpace, String name, String expression, String description, Integer priority, String result, String action) {
 		super();
 		this.nameSpace = nameSpace;
 		this.name = name;
 		this.expression = expression;
 		this.description = description;
 		this.priority = priority;
+		this.result = result;
 		this.action = action;
 	}
 
