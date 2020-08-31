@@ -27,7 +27,7 @@ class ProfileEngineTest {
 			facts.put("P1", "11");
 			facts.put("P2", "22");
 			facts.put("P3", "33");
-			facts.put("P4", "14");
+			facts.put("P4", "MEHMET");
 					
 			System.out.println("\nExecute Best Selected Action...");
 			String result = engine.executeBestAction(facts,null);

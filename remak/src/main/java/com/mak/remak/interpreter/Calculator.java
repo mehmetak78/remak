@@ -42,65 +42,117 @@ public class Calculator {
 		return false;
 	}
 
-	protected static int calculate(String operand, int leftValueInt, int rightValueInt) throws InterpreterException {
+	protected static String calculate(String operand, String leftValue, String rightValue) throws InterpreterException {
+		Integer leftValueInt = null;
+		Integer rightValueInt = null;
+		try {
+			leftValueInt = Integer.parseInt(leftValue);
+			rightValueInt = Integer.parseInt(rightValue);
+		}
+		catch (NumberFormatException e) {
+			leftValueInt = null;
+			rightValueInt = null;
+		}
+		Integer result = 0;
 		try {
 			switch (operand) {
 				case "AND":
 					if (getBoolVal(leftValueInt) && getBoolVal(rightValueInt)) {
-						return 1;
+						result = 1;
 					}
-					return 0;
+					break;
 				case "OR":
 					if (getBoolVal(leftValueInt) || getBoolVal(rightValueInt)) {
-						return 1;
+						result = 1;
 					}
-					return 0;
+					break;
 				case "=":
-					if (leftValueInt == rightValueInt) {
-						return 1;
+					if (leftValueInt != null) {
+						if (leftValueInt == rightValueInt) {
+							result = 1;
+						}
 					}
-					return 0;
+					else {
+						if (leftValue.compareTo(rightValue) == 0) {
+							result = 1;
+						}
+					}
+					break;
 				case "<":
-					if (leftValueInt < rightValueInt) {
-						return 1;
+					if (leftValueInt != null) {
+						if (leftValueInt < rightValueInt) {
+							result = 1;
+						}
 					}
-					return 0;
+					else {
+						if (leftValue.compareTo(rightValue) < 0) {
+							result = 1;
+						}
+					}
+					break;
 				case "<=":
-					if (leftValueInt <= rightValueInt) {
-						return 1;
+					if (leftValueInt != null) {
+						if (leftValueInt <= rightValueInt) {
+							result = 1;
+						}
 					}
-					return 0;
+					else {
+						if (leftValue.compareTo(rightValue) <= 0) {
+							result = 1;
+						}
+					}
+					break;
 				case ">":
-					if (leftValueInt > rightValueInt) {
-						return 1;
+					if (leftValueInt != null) {
+						if (leftValueInt > rightValueInt) {
+							result = 1;
+						}
 					}
-					return 0;
+					else {
+						if (leftValue.compareTo(rightValue) > 0) {
+							result = 1;
+						}
+					}
+					break;
 				case ">=":
-					if (leftValueInt >= rightValueInt) {
-						return 1;
+					if (leftValueInt != null) {
+						if (leftValueInt >= rightValueInt) {
+							result = 1;
+						}
 					}
-					return 0;
+					else {
+						if (leftValue.compareTo(rightValue) >= 0) {
+							result = 1;
+						}
+					}
+					break;
 				case "+":
-					return leftValueInt + rightValueInt;
+					result = leftValueInt + rightValueInt;
+					break;
 				case "-":
-					return leftValueInt - rightValueInt;
+					result = leftValueInt - rightValueInt;
+					break;
 				case "*":
-					return leftValueInt * rightValueInt;
+					result = leftValueInt * rightValueInt;
+					break;
 				case "**":
-					return (int) Math.pow(leftValueInt, rightValueInt);
+					result = (int) Math.pow(leftValueInt, rightValueInt);
+					break;
 				case "/":
-					return leftValueInt / rightValueInt;
+					result = leftValueInt / rightValueInt;
+					break;
 				case "NOT":
 					if (getBoolVal(rightValueInt)) {
-						return 0;
+						result = 0;
 					}
-					return 1;
+					result = 1;
+					break;
 			}
 		} catch (Exception e) {
 			System.out.println("Exception Here");
 			throw new InterpreterException();
 		}
-		return 0;
+		return result.toString();
 	}
 
 }

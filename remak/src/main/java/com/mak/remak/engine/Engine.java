@@ -135,7 +135,7 @@ public class Engine {
 			BTInterpreter bt;
 			try {
 				bt = BTInterpreter.parseExpression(rule.getCompiledExpression(), this.showExpressionCalculation);
-				int result = bt.traverseCalculate();
+				int result = Integer.parseInt(bt.traverseCalculate());
 				if (result > 0) {
 					rule.setIsSelected(true);
 					selectedRules.add(rule);

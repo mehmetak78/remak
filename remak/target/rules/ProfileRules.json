@@ -26,7 +26,7 @@
 		{
 		"nameSpace": "",
 		"name": "RULE4",
-		"expression": "${P4} = 15 AND @{RULE3} ",
+		"expression": "${P4} = 'MEHMET' AND @{RULE3} ",
 		"description": "Description for rule 4",
 		"priority": "4",
 		"result": "PROFILE4"

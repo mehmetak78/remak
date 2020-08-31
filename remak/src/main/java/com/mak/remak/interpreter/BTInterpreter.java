@@ -169,7 +169,7 @@ public class BTInterpreter {
 		}
 	}
 
-	public int traverseCalculate() throws InterpreterException {
+	public String traverseCalculate() throws InterpreterException {
 		if (showCalculation) {
 			System.out.println("traverseCalculate()");
 		}
@@ -177,36 +177,36 @@ public class BTInterpreter {
 		return traverseCalculateRecursive(this.root);
 	}
 
-	private int traverseCalculateRecursive(Node node) throws InterpreterException {
-		int leftValueInt = 0;
-		int rightValueInt = 0;
-		int result = 0;
+	private String traverseCalculateRecursive(Node node) throws InterpreterException {
+		String leftValue = null;
+		String rightValue = null;
+		String result = null;
 
 		try {
 			if (node != null) {
 				if (!node.left.isValue() && !node.right.isValue()) {
-					leftValueInt = traverseCalculateRecursive(node.left);
-					rightValueInt = traverseCalculateRecursive(node.right);
+					leftValue = traverseCalculateRecursive(node.left);
+					rightValue = traverseCalculateRecursive(node.right);
 
 				}
 				else if (node.left.isValue() && !node.right.isValue()) {
-					leftValueInt = Integer.parseInt(node.left.value);
-					rightValueInt = traverseCalculateRecursive(node.right);
+					leftValue = node.left.value;
+					rightValue = traverseCalculateRecursive(node.right);
 
 				}
 				else if (!node.left.isValue() && node.right.isValue()) {
-					leftValueInt = traverseCalculateRecursive(node.left);
-					rightValueInt = Integer.parseInt(node.right.value);
+					leftValue = traverseCalculateRecursive(node.left);
+					rightValue = node.right.value;
 				}
 				else if (node.left.isValue() && node.right.isValue()) {
-					leftValueInt = Integer.parseInt(node.left.value);
-					rightValueInt = Integer.parseInt(node.right.value);
+					leftValue = node.left.value;
+					rightValue = node.right.value;
 
 				}
 			}
-			result = Calculator.calculate(node.value, leftValueInt, rightValueInt);
+			result = Calculator.calculate(node.value, leftValue, rightValue);
 			if (showCalculation) {
-				System.out.println("(" + leftValueInt + node.value + rightValueInt + ") = " + result);
+				System.out.println("(" + leftValue + node.value + rightValue + ") = " + result);
 			}
 
 		} catch (Exception e) {

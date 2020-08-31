@@ -43,7 +43,7 @@ public class TestAppBTInterpreter {
 			BTInterpreter bt = BTInterpreter.parseExpression(testStr, true);
 			
 			int result;
-			result = bt.traverseCalculate();
+			result = Integer.parseInt(bt.traverseCalculate());
 			System.out.println("Test Result: "+bt+" = "+result+"\n");
 		} catch (Exception e) {
 			System.out.println(e);
