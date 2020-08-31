@@ -9,6 +9,7 @@ public class Rule implements Comparable<Rule>{
 	private Integer priority = 0;
 	private String result = null;
 	private String action = null;
+	private Boolean isSubRule = null;
 	
 	private String compiledExpression = null;
 	private Boolean isSelected = false;
@@ -116,6 +117,14 @@ public class Rule implements Comparable<Rule>{
 		this.action = action;
 	}
 	
+	public Boolean getIsSubRule() {
+		return isSubRule;
+	}
+
+	public void setIsSubRule(Boolean isSubRule) {
+		this.isSubRule = isSubRule;
+	}
+	
 	public Boolean getIsSelected() {
 		return isSelected;
 	}
@@ -132,6 +141,7 @@ public class Rule implements Comparable<Rule>{
 		this.isCompiled = isCompiled;
 	}
 
+	
 	@Override
 	public int compareTo(Rule o) {
 		if (this.priority < o.priority) {
@@ -146,9 +156,12 @@ public class Rule implements Comparable<Rule>{
 	@Override
 	public String toString() {
 		return "Rule [nameSpace=" + nameSpace + ", name=" + name + ", expression=" + expression + ", description="
-				+ description + ", priority=" + priority + ", result=" + result + ", action=" + action
-				+ ", compiledExpression=" + compiledExpression + "]";
+				+ description + ", priority=" + priority + ", result=" + result + ", action=" + action + ", isSubRule="
+				+ isSubRule + "]";
 	}
+
+
+
 
 
 

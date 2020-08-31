@@ -132,20 +132,22 @@ public class Engine {
 		}
 		selectedRules.removeAll(selectedRules);
 		for (Rule rule : rules) {
-			BTInterpreter bt;
-			try {
-				bt = BTInterpreter.parseExpression(rule.getCompiledExpression(), this.showExpressionCalculation);
-				int result = Integer.parseInt(bt.traverseCalculate());
-				if (result > 0) {
-					rule.setIsSelected(true);
-					selectedRules.add(rule);
+			if ((rule.getIsSubRule() == null) || (!rule.getIsSubRule())) {
+				BTInterpreter bt;
+				try {
+					bt = BTInterpreter.parseExpression(rule.getCompiledExpression(), this.showExpressionCalculation);
+					int result = Integer.parseInt(bt.traverseCalculate());
+					if (result > 0) {
+						rule.setIsSelected(true);
+						selectedRules.add(rule);
+					}
+					if (this.showRuleSelection) {
+						System.out.println("Expression Result: " + result + ", " + rule);
+					}
+				} catch (InterpreterException e) {
+					e.printStackTrace();
+					throw new EngineException("Exception while selecting compiled rule: " + rule.getName());
 				}
-				if (this.showRuleSelection) {
-					System.out.println("Expression Result: " + result + ", " + rule);
-				}
-			} catch (InterpreterException e) {
-				e.printStackTrace();
-				throw new EngineException("Exception while selecting compiled rule: " + rule.getName());
 			}
 		}
 		if (selectedRules != null) {
@@ -196,7 +198,8 @@ public class Engine {
 		return null;
 	}
 
-	public <Input, Output> ArrayList<Output> executeAllActions(Map<String, String> facts, Input input) throws EngineException {
+	public <Input, Output> ArrayList<Output> executeAllActions(Map<String, String> facts, Input input)
+			throws EngineException {
 		this.compileRules(facts);
 		this.selectCompiledRules();
 		return executeAllActions(input);
@@ -213,7 +216,7 @@ public class Engine {
 		if (showSelectedRules) {
 			printSelectedRules();
 		}
-		
+
 		return results;
 	}
 

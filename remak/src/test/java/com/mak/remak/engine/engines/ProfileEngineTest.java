@@ -32,12 +32,12 @@ class ProfileEngineTest {
 			System.out.println("\nExecute Best Selected Action...");
 			String result = engine.executeBestAction(facts,null);
 			System.out.println("Result: " + result);
-			assertEquals("PROFILE3", result);
+			assertEquals("PROFILE4", result);
 
 			System.out.println("\nExecute All Selected Actions");
 			ArrayList<String> results = engine.executeAllActions(facts,null);
 			System.out.println(results);
-			assertTrue(results.equals(new ArrayList<String>(Arrays.asList("PROFILE3","PROFILE1","PROFILE2"))));
+			assertTrue(results.equals(new ArrayList<String>(Arrays.asList("PROFILE4","PROFILE3"))));
 
 		
 		} catch (EngineException e) {

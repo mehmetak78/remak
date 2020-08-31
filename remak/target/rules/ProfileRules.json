@@ -5,6 +5,7 @@
 		"expression": "${P1} < ${P2}",
 		"description": "Description for rule 1",
 		"priority": "2",
+		"isSubRule": true,
 		"result": "PROFILE1"
 	},
 	{
@@ -13,21 +14,19 @@
 		"expression": "${P2} < ${P3}",
 		"description": "Description for rule 2",
 		"priority": "2",
+		"isSubRule": true,
 		"result": "PROFILE2"
 	},
 	{
-		"nameSpace": "",
 		"name": "RULE3",
 		"expression": "@{RULE1} AND @{RULE2}",
-		"description": "Description for rule 3",
-		"priority": "4",
+		"priority": "3",
+		"isSubRule": false,
 		"result": "PROFILE3"
 	},
-		{
-		"nameSpace": "",
+	{
 		"name": "RULE4",
-		"expression": "${P4} = 'MEHMET' AND @{RULE3} ",
-		"description": "Description for rule 4",
+		"expression": "${P4} = MEHMET AND @{RULE3} AND 23 = 23 ",
 		"priority": "4",
 		"result": "PROFILE4"
 	}
