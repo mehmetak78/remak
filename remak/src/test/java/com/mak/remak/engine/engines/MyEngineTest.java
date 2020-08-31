@@ -18,7 +18,7 @@ class MyEngineTest {
 		System.out.println("\ntestMyEngine()...");
 
 		try {
-			MyEngine engine = new MyEngine(false, false);
+			MyEngine engine = new MyEngine(false, true);
 		
 			ActionParams actionParams1 = new ActionParams();
 			actionParams1.putParam("MESSAGE", "Hello");
@@ -28,14 +28,18 @@ class MyEngineTest {
 			facts.put("P2", "22");
 			facts.put("P3", "33");
 		
+			
 			engine.compileRules(facts);
 			engine.selectCompiledRules();
 			engine.printSelectedRules();
+			
+			System.out.println("\nExecute Best Selected Action...");
 			String result = engine.executeBestAction(actionParams1);
 			System.out.println("Result: " + result);
 			assertEquals(3, engine.getSelectedRules().size());
 			assertEquals("RESULT2", result);
 
+			System.out.println("\nExecute All Selected Actions");
 			ArrayList<String> results = engine.executeAllActions(actionParams1);
 			assertEquals(3, engine.getSelectedRules().size());
 			assertEquals(3, results.size());

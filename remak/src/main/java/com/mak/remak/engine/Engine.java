@@ -70,7 +70,7 @@ public class Engine {
 
 	private Rule findRule(String subRule) {
 		for (Rule rule : rules) {
-			if (rule.getName().compareTo(subRule) == 0) {
+			if (rule.getName().equals(subRule)) {
 				return rule;
 			}
 		}
@@ -186,7 +186,6 @@ public class Engine {
 	public <Input, Output> ArrayList<Output> executeAllActions(Input input) {
 		ArrayList<Output> results = new ArrayList<Output>();
 		for (Rule rule : getSelectedRules()) {
-
 			Output result = executeAction(rule, input);
 			if (result != null) {
 				results.add(result);
