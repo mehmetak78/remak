@@ -2,6 +2,7 @@ package com.mak.remak.engine;
 
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -78,9 +79,9 @@ public class Engine {
 	}
 
 	public void compileRules(Map<String, String> facts) throws EngineException {
-		Boolean areAllCompiled = true;
-		while (areAllCompiled) {
-			areAllCompiled = false;
+		Boolean areAllCompiled = false;
+		while (!areAllCompiled) {
+			areAllCompiled = true;
 			for (Rule rule : rules) {
 				if (!rule.getIsCompiled()) {
 					String[] strArr = rule.getCompiledExpression().split(" ");
@@ -96,10 +97,11 @@ public class Engine {
 							newExpression += " " + value + " ";
 						}
 						else if (str.startsWith("@{")) {
-							areAllCompiled = true;
+							areAllCompiled = false;
 							String subRuleStr = str.substring(2, str.length() - 1);
 							if (rule.getName().compareTo(subRuleStr) == 0) {
-								throw new EngineException("Cyclic rule is not allowed. Check rule: " + rule.getName());
+								throw new EngineException(
+										"Cyclic rules are not allowed. Check rule: " + rule.getName());
 							}
 							Rule subRule = findRule(subRuleStr);
 							if (subRule != null) {
@@ -127,6 +129,7 @@ public class Engine {
 		if (this.showRuleSelection) {
 			System.out.println("\nselectCompiledRules()");
 		}
+		selectedRules.removeAll(selectedRules);
 		for (Rule rule : rules) {
 			BTInterpreter bt;
 			try {
@@ -134,24 +137,24 @@ public class Engine {
 				int result = bt.traverseCalculate();
 				if (result > 0) {
 					rule.setIsSelected(true);
-					getSelectedRules().add(rule);
+					selectedRules.add(rule);
 				}
 				if (this.showRuleSelection) {
-					System.out.println("Result: " + result + ", " + rule);
+					System.out.println("Expression Result: " + result + ", " + rule);
 				}
 			} catch (InterpreterException e) {
 				e.printStackTrace();
 				throw new EngineException("Exception while selecting compiled rule: " + rule.getName());
 			}
 		}
-		if (getSelectedRules() != null) {
-			sortRules(getSelectedRules());
+		if (selectedRules != null) {
+			sortRules(selectedRules);
 		}
 	}
 
 	public void printSelectedRules() {
 		System.out.println("printSelectedRules()");
-		for (Rule rule : getSelectedRules()) {
+		for (Rule rule : selectedRules) {
 			System.out.println(rule);
 		}
 	}
@@ -173,19 +176,32 @@ public class Engine {
 		}
 		return null;
 	}
-	
-	
+
+	public <Input, Output> Output executeBestAction(Map<String, String> facts, Input input) throws EngineException {
+		this.compileRules(facts);
+		this.selectCompiledRules();
+		//this.printSelectedRules();
+		return executeBestAction(input);
+	}
+
 	public <Input, Output> Output executeBestAction(Input input) {
 		if (selectedRules.size() > 0) {
-			Rule rule = this.selectedRules.get(0);
+			Rule rule = selectedRules.get(0);
 			return executeAction(rule, input);
 		}
 		return null;
 	}
 
+	public <Input, Output> ArrayList<Output> executeAllActions(Map<String, String> facts, Input input) throws EngineException {
+		this.compileRules(facts);
+		this.selectCompiledRules();
+		//this.printSelectedRules();
+		return executeAllActions(input);
+	}
+
 	public <Input, Output> ArrayList<Output> executeAllActions(Input input) {
 		ArrayList<Output> results = new ArrayList<Output>();
-		for (Rule rule : getSelectedRules()) {
+		for (Rule rule : selectedRules) {
 			Output result = executeAction(rule, input);
 			if (result != null) {
 				results.add(result);

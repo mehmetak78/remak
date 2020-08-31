@@ -145,9 +145,11 @@ public class Rule implements Comparable<Rule>{
 
 	@Override
 	public String toString() {
-		return "Rule [nameSpace=" + nameSpace + ", name=" + name + ", expression=" + expression + ", compiledExpression=" + compiledExpression + ", description="
-				+ description + ", priority=" + priority + ", action=" + action + "]";
+		return "Rule [nameSpace=" + nameSpace + ", name=" + name + ", expression=" + expression + ", description="
+				+ description + ", priority=" + priority + ", result=" + result + ", action=" + action
+				+ ", compiledExpression=" + compiledExpression + "]";
 	}
+
 
 
 
