@@ -5,13 +5,13 @@ import com.mak.remak.engine.EngineException;
 
 public class ProfileEngine extends Engine {
 
-	public ProfileEngine(Boolean showCalculation, Boolean showRuleSelection) throws EngineException {
-		super(showCalculation, showRuleSelection);
+	public ProfileEngine(Boolean showExpressionCalculation, Boolean showRuleSelection, Boolean showSelectedRules) throws EngineException {
+		super(showExpressionCalculation, showRuleSelection, showSelectedRules);
 		this.addRulesFromFile("target/rules/ProfileRules.json");
 	}
 
 	public ProfileEngine() throws EngineException {
-		this(false,false);
+		this(false, false, false);
 	}
 	
 

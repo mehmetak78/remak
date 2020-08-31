@@ -22,8 +22,9 @@ public class Engine {
 
 	private Map<String, FIAction<?, ?>> actions;
 
-	protected Boolean showCalculation = false;
+	protected Boolean showExpressionCalculation = false;
 	protected Boolean showRuleSelection = false;
+	protected Boolean showSelectedRules = false;
 
 	public Engine() {
 		super();
@@ -32,10 +33,11 @@ public class Engine {
 		this.actions = new HashMap<String, FIAction<?, ?>>();
 	}
 
-	public Engine(Boolean showCalculation, Boolean showRuleSelection) {
+	public Engine(Boolean showExpressionCalculation, Boolean showRuleSelection, Boolean showSelectedRules) {
 		this();
-		this.showCalculation = showCalculation;
+		this.showExpressionCalculation = showExpressionCalculation;
 		this.showRuleSelection = showRuleSelection;
+		this.showSelectedRules = showSelectedRules;
 	}
 
 	public ArrayList<Rule> getRules() {
@@ -119,7 +121,6 @@ public class Engine {
 					}
 					rule.setCompiledExpression(newExpression);
 				}
-
 			}
 		}
 	}
@@ -133,7 +134,7 @@ public class Engine {
 		for (Rule rule : rules) {
 			BTInterpreter bt;
 			try {
-				bt = BTInterpreter.parseExpression(rule.getCompiledExpression(), this.showCalculation);
+				bt = BTInterpreter.parseExpression(rule.getCompiledExpression(), this.showExpressionCalculation);
 				int result = bt.traverseCalculate();
 				if (result > 0) {
 					rule.setIsSelected(true);
@@ -180,22 +181,24 @@ public class Engine {
 	public <Input, Output> Output executeBestAction(Map<String, String> facts, Input input) throws EngineException {
 		this.compileRules(facts);
 		this.selectCompiledRules();
-		//this.printSelectedRules();
 		return executeBestAction(input);
 	}
 
 	public <Input, Output> Output executeBestAction(Input input) {
 		if (selectedRules.size() > 0) {
 			Rule rule = selectedRules.get(0);
+			if (showSelectedRules) {
+				printSelectedRules();
+			}
 			return executeAction(rule, input);
 		}
+
 		return null;
 	}
 
 	public <Input, Output> ArrayList<Output> executeAllActions(Map<String, String> facts, Input input) throws EngineException {
 		this.compileRules(facts);
 		this.selectCompiledRules();
-		//this.printSelectedRules();
 		return executeAllActions(input);
 	}
 
@@ -207,6 +210,10 @@ public class Engine {
 				results.add(result);
 			}
 		}
+		if (showSelectedRules) {
+			printSelectedRules();
+		}
+		
 		return results;
 	}
 

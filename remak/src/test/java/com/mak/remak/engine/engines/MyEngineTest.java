@@ -18,7 +18,7 @@ class MyEngineTest {
 		System.out.println("\ntestMyEngine()...");
 
 		try {
-			MyEngine engine = new MyEngine(false, true);
+			MyEngine engine = new MyEngine(false, false, true);
 		
 			ActionParams actionParams1 = new ActionParams();
 			actionParams1.putParam("MESSAGE", "Hello");

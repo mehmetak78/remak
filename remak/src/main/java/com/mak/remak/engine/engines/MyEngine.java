@@ -9,14 +9,14 @@ import com.mak.remak.engine.actions.FIAction;
 
 public class MyEngine extends Engine {
 
-	public MyEngine(Boolean showCalculation, Boolean showRuleSelection) throws EngineException {
-		super(showCalculation, showRuleSelection);
+	public MyEngine(Boolean showExpressionCalculation, Boolean showRuleSelection, Boolean showSelectedRules) throws EngineException {
+		super(showExpressionCalculation, showRuleSelection, showSelectedRules);
 		initializeRules();
 		initializeActions();
 	}
 	
 	public MyEngine() throws EngineException {
-		this(false, false);
+		this(false, false, false);
 	}
 
 	private void initializeRules() throws EngineException {

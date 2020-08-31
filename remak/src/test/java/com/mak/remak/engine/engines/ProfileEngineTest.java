@@ -19,7 +19,7 @@ class ProfileEngineTest {
 		System.out.println("\ntestProfileEngine()...");
 
 		try {
-			Engine engine = new ProfileEngine(false, true);
+			Engine engine = new ProfileEngine(false, false, true);
 		
 			Map<String, String> facts = new HashMap<String, String>();
 			facts.put("P1", "11");
@@ -30,26 +30,24 @@ class ProfileEngineTest {
 			String result = engine.executeBestAction(facts,null);
 			System.out.println("Result: " + result);
 			assertEquals(3, engine.getSelectedRules().size());
-			assertEquals("PROFILE2", result);
+			assertEquals("PROFILE3", result);
 
 			System.out.println("\nExecute All Selected Actions");
 			ArrayList<String> results = engine.executeAllActions(facts,null);
 			assertEquals(3, engine.getSelectedRules().size());
 			assertEquals(3, results.size());
-			assertEquals("PROFILE2", results.get(0));
-			assertEquals("PROFILE3", results.get(1));
-			assertEquals("PROFILE1", results.get(2));
+			assertEquals("PROFILE3", results.get(0));
+			assertEquals("PROFILE1", results.get(1));
+			assertEquals("PROFILE2", results.get(2));
 			for (String result1 : results) {
 				System.out.println("Result: " + result1);
 			}
+			
 
 		} catch (EngineException e) {
 			e.printStackTrace();
+			fail("Exception:"+e.getMessage());
 		}
-
-
-		
-		
 	}
 
 }

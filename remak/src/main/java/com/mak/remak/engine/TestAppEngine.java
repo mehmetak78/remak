@@ -12,7 +12,7 @@ public class TestAppEngine {
 	public static void main(String[] args) {
 		System.out.println("TestAppEngine started...");
 		
-		Engine engine = new Engine(true,true);
+		Engine engine = new Engine(true,true, true);
 		engine.addRule(new Rule("RULE1","${P1} < ${P2}",2));
 		engine.addRule(new Rule("RULE2","${P3} < ${P2}",2));
 		engine.addRule(new Rule("RULE3","${P3} >= ${P1} AND ${P1} < ${P2}",2));
