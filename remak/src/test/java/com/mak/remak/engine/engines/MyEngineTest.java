@@ -53,10 +53,6 @@ class MyEngineTest {
 		} catch (EngineException e) {
 			e.printStackTrace();
 		}
-
-
-		
-		
 	}
 
 }
