@@ -35,7 +35,7 @@ class ProfileEngineTest {
 			System.out.println("Result: " + result);
 			assertEquals("PROFILE4", result);
 			
-			engine.addRule(new Rule("", "RULE5", "${P5} = PROFILE4", "Desc for rule 5", 6, "RESULT4", null));
+			engine.addRule(new Rule("com.mak.remak.rules", "RULE5", "${P5} = PROFILE4", "Desc for rule 5", 6, "RESULT4", null));
 			facts.put("P5", result);
 			String result2 = engine.executeBestAction(facts,null);
 			System.out.println("Result2: " + result2);

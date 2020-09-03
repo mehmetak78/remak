@@ -49,7 +49,8 @@ public class Engine {
 	}
 
 	public void addRule(Rule rule) {
-		rule.setCompiledExpression(rule.getExpression());
+
+		rule.setCompiledSubRuleExpression(rule.getExpression());
 		this.rules.add(rule);
 	}
 
@@ -60,7 +61,7 @@ public class Engine {
 					new TypeReference<List<Rule>>() {
 					});
 			for (Rule rule : rules) {
-				rule.setCompiledExpression(rule.getExpression());
+				rule.setCompiledSubRuleExpression(rule.getExpression());
 			}
 		} catch (Exception e) {
 			throw new EngineException("Exception while reading from the file.");
@@ -80,25 +81,17 @@ public class Engine {
 		return null;
 	}
 
-	public void compileRules(Map<String, String> facts) throws EngineException {
+	public void compileSubRules() throws EngineException {
 		Boolean areAllCompiled = false;
 		while (!areAllCompiled) {
 			areAllCompiled = true;
 			for (Rule rule : rules) {
-				if (!rule.getIsCompiled()) {
-					String[] strArr = rule.getCompiledExpression().split(" ");
+				if (!rule.getIsSubRulesCompiled()) {
+					String[] strArr = rule.getCompiledSubRuleExpression().split(" ");
 					String newExpression = "";
-					rule.setIsCompiled(true);
+					rule.setIsSubRulesCompiled(true);
 					for (String str : strArr) {
-						if (str.startsWith("${")) {
-							String key = str.substring(2, str.length() - 1);
-							String value = facts.get(key);
-							if (value == null) {
-								throw new EngineException("Invalid parameter in the rule: " + rule.getName());
-							}
-							newExpression += " " + value + " ";
-						}
-						else if (str.startsWith("@{")) {
+						if (str.startsWith("@{")) {
 							areAllCompiled = false;
 							String subRuleStr = str.substring(2, str.length() - 1);
 							if (rule.getName().compareTo(subRuleStr) == 0) {
@@ -112,15 +105,41 @@ public class Engine {
 							else {
 								throw new EngineException("Exception while compiling rule: " + rule.getName());
 							}
-							rule.setIsCompiled(false);
+							rule.setIsSubRulesCompiled(false);
 						}
 						else {
 							newExpression += "" + str + " ";
-
 						}
 					}
+					rule.setCompiledSubRuleExpression(newExpression);
 					rule.setCompiledExpression(newExpression);
 				}
+			}
+		}
+	}
+
+	public void compileRules(Map<String, String> facts) throws EngineException {
+		compileSubRules();
+		for (Rule rule : rules) {
+			if (!rule.getIsCompiled()) {
+				String[] strArr = rule.getCompiledExpression().split(" ");
+				String newExpression = "";
+				rule.setIsCompiled(true);
+				for (String str : strArr) {
+					if (str.startsWith("${")) {
+						String key = str.substring(2, str.length() - 1);
+						String value = facts.get(key);
+						if (value == null) {
+							throw new EngineException("Invalid parameter in the rule: " + rule.getName());
+						}
+						newExpression += " " + value + " ";
+					}
+					else {
+						newExpression += "" + str + " ";
+
+					}
+				}
+				rule.setCompiledExpression(newExpression);
 			}
 		}
 	}

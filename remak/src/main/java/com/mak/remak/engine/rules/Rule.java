@@ -4,16 +4,17 @@ public class Rule implements Comparable<Rule>{
 
 	private String nameSpace = "com.mak.remak.rules";
 	private String name = null;
-	private String expression = null;
 	private String description = null;
 	private Integer priority = 0;
+	private Boolean isSubRule = null;
+	private String expression = null;
+	private String compiledSubRuleExpression = null;
+	private String compiledExpression = null;
 	private String result = null;
 	private String action = null;
-	private Boolean isSubRule = null;
-	
-	private String compiledExpression = null;
 	private Boolean isSelected = false;
 	private Boolean isCompiled = false;
+	private Boolean isSubRulesCompiled = false;
 	
 	public Rule(String nameSpace, String name, String expression, String description, Integer priority, String result, String action) {
 		super();
@@ -85,6 +86,13 @@ public class Rule implements Comparable<Rule>{
 		this.compiledExpression = compiledExpression;
 	}
 
+	public String getCompiledSubRuleExpression() {
+		return compiledSubRuleExpression;
+	}
+
+	public void setCompiledSubRuleExpression(String compiledSubRuleExpression) {
+		this.compiledSubRuleExpression = compiledSubRuleExpression;
+	}
 
 	public String getDescription() {
 		return description;
@@ -141,6 +149,16 @@ public class Rule implements Comparable<Rule>{
 	public void setIsCompiled(Boolean isCompiled) {
 		this.isCompiled = isCompiled;
 	}
+	
+	public Boolean getIsSubRulesCompiled() {
+		return isSubRulesCompiled;
+	}
+
+	public void setIsSubRulesCompiled(Boolean isSubRulesCompiled) {
+		this.isSubRulesCompiled = isSubRulesCompiled;
+	}
+
+
 
 	
 	@Override
@@ -156,22 +174,12 @@ public class Rule implements Comparable<Rule>{
 
 	@Override
 	public String toString() {
-		return "Rule [nameSpace=" + nameSpace + ", name=" + name + ", expression=" + expression + ", description="
-				+ description + ", priority=" + priority + ", result=" + result + ", action=" + action + ", isSubRule="
-				+ isSubRule + "]";
+		return name +" :\n\tnameSpace=" + nameSpace + ", name=" + name + ", description=" + description + ",\n\tpriority="
+				+ priority + ", isSubRule=" + isSubRule + ", \n\texpression=" + expression + ", \n\tcompiledSubRuleExpression="
+				+ compiledSubRuleExpression + ", \n\tcompiledExpression=" + compiledExpression + ", \n\tresult=" + result
+				+ ", action=" + action ;
 	}
 
 
-
-
-
-
-
-
-
-
-
-
-	
 	
 }

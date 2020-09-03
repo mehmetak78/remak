@@ -1,6 +1,6 @@
 [
 	{
-		"nameSpace": "",
+		"nameSpace": "com.mak.remak.rules",
 		"name": "RULE1",
 		"expression": "${P1} < ${P2}",
 		"description": "Description for rule 1",
@@ -9,7 +9,7 @@
 		"result": "PROFILE1"
 	},
 	{
-		"nameSpace": "",
+		"nameSpace": "com.mak.remak.rules",
 		"name": "RULE2",
 		"expression": "${P2} < ${P3}",
 		"description": "Description for rule 2",
