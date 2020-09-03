@@ -21,6 +21,7 @@ public class Engine {
 	private ArrayList<Rule> selectedRules;
 
 	private Map<String, FIAction<?, ?>> actions;
+	private Map<String, String> facts;
 
 	protected Boolean showExpressionCalculation = false;
 	protected Boolean showRuleSelection = false;
@@ -119,6 +120,7 @@ public class Engine {
 	}
 
 	public void compileRules(Map<String, String> facts) throws EngineException {
+		this.facts = facts;
 		compileSubRules();
 		for (Rule rule : rules) {
 			if (!rule.getIsCompiled()) {
@@ -176,6 +178,7 @@ public class Engine {
 
 	public void printSelectedRules() {
 		System.out.println("printSelectedRules()");
+		System.out.println(this.facts);
 		for (Rule rule : selectedRules) {
 			System.out.println(rule);
 		}
