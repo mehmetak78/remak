@@ -22,7 +22,7 @@ class ProfileEngineTest {
 		System.out.println("\ntestProfileEngine()...");
 
 		try {
-			Engine engine = new ProfileEngine(false, false, true);
+			Engine engine = new ProfileEngine();
 		
 			Map<String, String> facts = new HashMap<String, String>();
 			facts.put("P1", "11");
@@ -32,20 +32,23 @@ class ProfileEngineTest {
 					
 			System.out.println("\nExecute Best Selected Action...");
 			String result = engine.executeBestAction(facts,null);
+			
 			System.out.println("Result: " + result);
 			assertEquals("PROFILE4", result);
 			
-			engine.addRule(new Rule("com.mak.remak.rules", "RULE5", "${P5} = PROFILE4", "Desc for rule 5", 6, "RESULT4", null));
+			engine.addRule(new Rule("com.mak.remak.rules", "RULE5", "${P5} = PROFILE4", "Desc for rule 5", 6, "RESULT5", null));
 			facts.put("P5", result);
+			System.out.println("\nExecute Best Selected Action with New Rule and Fact...");
 			String result2 = engine.executeBestAction(facts,null);
 			System.out.println("Result2: " + result2);
-			assertEquals("RESULT4", result2);
+			assertEquals("RESULT5", result2);
 			
 			System.out.println("\nExecute All Selected Actions");
 			ArrayList<String> results = engine.executeAllActions(facts,null);
 			System.out.println(results);
-			assertTrue(results.equals(new ArrayList<String>(Arrays.asList("RESULT4","PROFILE4","PROFILE3"))));
+			assertTrue(results.equals(new ArrayList<String>(Arrays.asList("RESULT5","PROFILE4","PROFILE3"))));
 
+			engine.printSelectedRules();
 		
 		} catch (EngineException e) {
 			e.printStackTrace();

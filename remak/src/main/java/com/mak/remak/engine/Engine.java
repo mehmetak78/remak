@@ -177,8 +177,8 @@ public class Engine {
 	}
 
 	public void printSelectedRules() {
-		System.out.println("printSelectedRules()");
-		System.out.println(this.facts);
+		System.out.println("\nprintSelectedRules()");
+		System.out.println("Facts: " + this.facts);
 		for (Rule rule : selectedRules) {
 			System.out.println(rule);
 		}
