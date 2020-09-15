@@ -1,4 +1,4 @@
-package com.mak.remak.engine.engines;
+package com.mak.remak.engine.engine;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import com.mak.remak.engine.EngineException;
 import com.mak.remak.engine.actions.ActionParams;
+import com.mak.remak.engine.engines.MyEngine;
 
 class MyEngineTest {
 

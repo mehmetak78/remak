@@ -13,8 +13,12 @@ public class Rule implements Comparable<Rule>{
 	private String result = null;
 	private String action = null;
 	private Boolean isSelected = false;
-	private Boolean isCompiled = false;
 	private Boolean isSubRulesCompiled = false;
+	private Boolean isCompiled = false;
+	
+	public Rule() {
+		super();
+	}
 	
 	public Rule(String nameSpace, String name, String expression, String description, Integer priority, String result, String action) {
 		super();
@@ -27,10 +31,7 @@ public class Rule implements Comparable<Rule>{
 		this.action = action;
 	}
 
-	public Rule() {
-		super();
-	}
-	
+
 	public Rule(String name,  Integer priority) {
 		super();
 		this.name = name;

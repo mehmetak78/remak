@@ -2,7 +2,7 @@ package com.mak.remak.interpreter;
 
 public class Calculator {
 
-	protected static int getPriority(String str) {
+	public static int getPriority(String str) {
 		switch (str) {
 			case "OR":
 				return 5;
@@ -29,11 +29,11 @@ public class Calculator {
 		return 9999;
 	}
 
-	protected static Boolean getBoolVal(int val) {
+	public static Boolean getBoolVal(int val) {
 		return val > 0;
 	}
 
-	protected static Boolean isUnary(String str) {
+	public static Boolean isUnary(String str) {
 		switch (str) {
 			case "NOT":
 				return true;
@@ -42,14 +42,13 @@ public class Calculator {
 		return false;
 	}
 
-	protected static String calculate(String operand, String leftValue, String rightValue) throws InterpreterException {
+	public static String calculate(String operand, String leftValue, String rightValue) throws InterpreterException {
 		Integer leftValueInt = null;
 		Integer rightValueInt = null;
 		try {
 			leftValueInt = Integer.parseInt(leftValue);
 			rightValueInt = Integer.parseInt(rightValue);
-		}
-		catch (NumberFormatException e) {
+		} catch (NumberFormatException e) {
 			leftValueInt = null;
 			rightValueInt = null;
 		}
@@ -145,11 +144,13 @@ public class Calculator {
 					if (getBoolVal(rightValueInt)) {
 						result = 0;
 					}
-					result = 1;
+					else {
+						result = 1;
+					}
 					break;
 			}
 		} catch (Exception e) {
-			System.out.println("Exception Here");
+			System.out.println("Exception while calculating expression...");
 			throw new InterpreterException();
 		}
 		return result.toString();

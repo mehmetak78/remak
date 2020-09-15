@@ -45,6 +45,12 @@ public class TestAppBTInterpreter {
 			int result;
 			result = Integer.parseInt(bt.traverseCalculate());
 			System.out.println("Test Result: "+bt+" = "+result+"\n");
+			
+			 testStr = "NOT 1 AND 0";
+			System.out.println("Test Exprsn: " + testStr);
+			bt = BTInterpreter.parseExpression(testStr, true);
+			result = Integer.parseInt(bt.traverseCalculate());
+			System.out.println("Test Result: " + bt + " = " + result + "\n");
 		} catch (Exception e) {
 			System.out.println(e);
 		}

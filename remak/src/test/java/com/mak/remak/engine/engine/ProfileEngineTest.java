@@ -1,4 +1,4 @@
-package com.mak.remak.engine.engines;
+package com.mak.remak.engine.engine;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import com.mak.remak.engine.Engine;
 import com.mak.remak.engine.EngineException;
 import com.mak.remak.engine.actions.ActionParams;
+import com.mak.remak.engine.engines.ProfileEngine;
 import com.mak.remak.engine.rules.Rule;
 import com.sun.tools.javac.util.List;
 

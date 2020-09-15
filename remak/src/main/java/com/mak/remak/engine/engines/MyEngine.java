@@ -9,16 +9,16 @@ import com.mak.remak.engine.actions.FIAction;
 
 public class MyEngine extends Engine {
 
+	public MyEngine() throws EngineException {
+		this(false, false, false);
+	}
+	
 	public MyEngine(Boolean showExpressionCalculation, Boolean showRuleSelection, Boolean showSelectedRules) throws EngineException {
 		super(showExpressionCalculation, showRuleSelection, showSelectedRules);
 		initializeRules();
 		initializeActions();
 	}
 	
-	public MyEngine() throws EngineException {
-		this(false, false, false);
-	}
-
 	private void initializeRules() throws EngineException {
 		this.addRulesFromFile("target/rules/myRules.json");
 //			this.addRule(new Rule("", "RULE1", "${P1} < ${P2}", "Desc for rule 1", 2, "action1"));

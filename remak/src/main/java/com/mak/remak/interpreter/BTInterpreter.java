@@ -17,21 +17,6 @@ public class BTInterpreter {
 		this.showCalculation = showCalculation;
 	}
 
-	public static BTInterpreter parseExpression(String expression, Boolean showCalculation) throws InterpreterException {
-		List<String> strList = new ArrayList<String>(Arrays.asList(expression.split(" ")));
-		strList.removeAll(Arrays.asList("", null));
-
-		if (!checkExpression(strList)) {
-			return null;
-		}
-		try {
-			return parseExpressionRecursive(strList, 0, showCalculation);
-		} catch (Exception ex) {
-			System.out.println("Error in expression...");
-			return null;
-		}
-	}
-
 	private static Boolean checkExpression(List<String> strList) throws InterpreterException {
 		if (strList.size() < 3) {
 			throw new InterpreterException("Error in expression... Invalid number of arguments");
@@ -49,6 +34,19 @@ public class BTInterpreter {
 			throw new InterpreterException("Error in expression... Invalid number of parantheses");
 		}
 		return true;
+	}
+	
+	public static BTInterpreter parseExpression(String expression, Boolean showCalculation) throws InterpreterException {
+		List<String> strList = new ArrayList<String>(Arrays.asList(expression.split(" ")));
+		strList.removeAll(Arrays.asList("", null));
+		if (!checkExpression(strList)) {
+			return null;
+		}
+		try {
+			return parseExpressionRecursive(strList, 0, showCalculation);
+		} catch (Exception ex) {
+			throw new InterpreterException("Error in expression... Parsing error...");
+		}
 	}
 
 	private static BTInterpreter parseExpressionRecursive(List<String> strList, int index, Boolean showCalculation) {
@@ -125,7 +123,6 @@ public class BTInterpreter {
 	}
 
 	private void add(Node newNode) {
-		// System.out.println("Added: " + newNode);
 		root = root == null ? newNode : addRecursive(root, newNode);
 	}
 
@@ -170,10 +167,6 @@ public class BTInterpreter {
 	}
 
 	public String traverseCalculate() throws InterpreterException {
-		if (showCalculation) {
-			System.out.println("traverseCalculate()");
-		}
-		
 		return traverseCalculateRecursive(this.root);
 	}
 

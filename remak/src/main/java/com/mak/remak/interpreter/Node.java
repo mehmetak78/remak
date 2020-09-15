@@ -2,13 +2,13 @@ package com.mak.remak.interpreter;
 
 public class Node implements Comparable<Node> {
 
-	protected Node parent;
-	protected Node left;
-	protected String value;
-	protected Node right;
-	protected Boolean isSubTree;
+	public Node parent;
+	public Node left;
+	public String value;
+	public Node right;
+	public Boolean isSubTree;
 
-	protected Node() {
+	public Node() {
 		super();
 		this.value = null;
 		this.parent = null;
@@ -17,7 +17,7 @@ public class Node implements Comparable<Node> {
 		this.isSubTree = false;
 	}
 
-	protected Node(String value) {
+	public Node(String value) {
 		super();
 		this.value = value;
 		this.parent = null;
@@ -26,7 +26,7 @@ public class Node implements Comparable<Node> {
 		this.isSubTree = false;
 	}
 
-	protected Node(String left, String value, String right) {
+	public Node(String left, String value, String right) {
 		this(value);
 		this.left = new Node(left);
 		this.right = new Node(right);
@@ -38,7 +38,6 @@ public class Node implements Comparable<Node> {
 
 	@Override
 	public int compareTo(Node other) {
-
 		if (Calculator.getPriority(other.value) < Calculator.getPriority(this.value)) {
 			return 1;
 		}
