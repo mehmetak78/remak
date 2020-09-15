@@ -183,6 +183,18 @@ public class Engine {
 			System.out.println(rule);
 		}
 	}
+	
+	public void printAllRules(Boolean inOrder) {
+		System.out.println("\nprintAllRules() + inOrder:" + inOrder);
+		System.out.println("Facts: " + this.facts);
+		ArrayList<Rule> allRules = rules;
+		if (inOrder) {
+			sortRules(allRules);
+		}
+		for (Rule rule : allRules) {
+			System.out.println(rule);
+		}
+	}
 
 	public void putAction(String actionName, FIAction<?, ?> action) {
 		this.actions.put(actionName, action);

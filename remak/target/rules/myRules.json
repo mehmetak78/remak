@@ -6,6 +6,7 @@
 		"description": "Description for rule 1",
 		"priority": "2",
 		"result": "RESULT1",
+		"isSubRule": true,
 		"action": "action1"
 	},
 	{
@@ -15,12 +16,21 @@
 		"description": "Description for rule 2",
 		"priority": "4",
 		"result": "RESULT2",
+		"isSubRule": true,
 		"action": "action2"
 	},
 	{
 		"nameSpace": "",
 		"name": "RULE3",
 		"expression": "@{RULE1} AND @{RULE2}",
+		"description": "Description for rule 3",
+		"priority": "3",
+		"action": "action3"
+	},
+	{
+		"nameSpace": "",
+		"name": "RULE4",
+		"expression": "@{RULE1} AND NOT @{RULE2} ",
 		"description": "Description for rule 3",
 		"priority": "3",
 		"action": "action3"

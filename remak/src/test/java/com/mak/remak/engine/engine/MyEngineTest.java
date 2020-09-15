@@ -33,24 +33,25 @@ class MyEngineTest {
 			engine.compileRules(facts);
 			engine.selectCompiledRules();
 			engine.printSelectedRules();
+
 			
 			System.out.println("\nExecute Best Selected Action...");
 			String result = engine.executeBestAction(actionParams1);
 			System.out.println("Result: " + result);
-			assertEquals(3, engine.getSelectedRules().size());
-			assertEquals("RESULT2", result);
+			assertEquals(1, engine.getSelectedRules().size());
+			assertEquals("300", result);
 
 			System.out.println("\nExecute All Selected Actions");
 			ArrayList<String> results = engine.executeAllActions(actionParams1);
-			assertEquals(3, engine.getSelectedRules().size());
-			assertEquals(3, results.size());
-			assertEquals("RESULT2", results.get(0));
-			assertEquals("300", results.get(1));
-			assertEquals("RESULT1", results.get(2));
+			assertEquals(1, engine.getSelectedRules().size());
+			assertEquals(1, results.size());
+			assertEquals("300", results.get(0));
 			for (String result1 : results) {
 				System.out.println("Result: " + result1);
 			}
 
+			
+			engine.printAllRules(true);
 		} catch (EngineException e) {
 			e.printStackTrace();
 		}

@@ -175,7 +175,7 @@ public class Rule implements Comparable<Rule>{
 
 	@Override
 	public String toString() {
-		return name +" :\n\tnameSpace=" + nameSpace + ", name=" + name + ", description=" + description + ",\n\tpriority="
+		return name +" : isSelected: "+isSelected +"\n\tnameSpace=" + nameSpace + ", name=" + name + ", description=" + description + ",\n\tpriority="
 				+ priority + ", isSubRule=" + isSubRule + ", \n\texpression=" + expression + ", \n\tcompiledSubRuleExpression="
 				+ compiledSubRuleExpression + ", \n\tcompiledExpression=" + compiledExpression + ", \n\tresult=" + result
 				+ ", action=" + action ;
